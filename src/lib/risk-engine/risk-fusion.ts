@@ -9,11 +9,17 @@ export interface FusionOutput {
 export function fuseRiskScores(
   fraudScore: number,
   anomalyScore: number,
-  accountRiskScore: number,
-  contextualMultiplier = 1.0
+  behaviorScore: number,
+  contextScoreOrMultiplier = 0
 ): FusionOutput {
-  // Dominant risk blending
-  let rawFused = (fraudScore * 0.55 + anomalyScore * 0.35 + accountRiskScore * 0.10) * contextualMultiplier;
+  // Configurable weights matching Section 14 & 16:
+  // 0.45 * Fraud + 0.30 * Anomaly + 0.15 * Behavior + 0.10 * Context
+  let rawFused: number;
+  if (contextScoreOrMultiplier <= 1.5 && contextScoreOrMultiplier > 0) {
+    rawFused = (fraudScore * 0.45 + anomalyScore * 0.30 + behaviorScore * 0.15 + 10 * 0.10) * contextScoreOrMultiplier;
+  } else {
+    rawFused = fraudScore * 0.45 + anomalyScore * 0.30 + behaviorScore * 0.15 + contextScoreOrMultiplier * 0.10;
+  }
 
   // If one of the primary models indicates critical danger, elevate the composite fusion
   if (fraudScore >= 85 || (fraudScore >= 75 && anomalyScore >= 75)) {

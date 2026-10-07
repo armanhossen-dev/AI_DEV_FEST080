@@ -312,3 +312,83 @@ export async function createLiveTransaction(
 
   return createdTxn;
 }
+
+/**
+ * Standard backend service aliases and relational lookups required by Section 11 & Gemini tools
+ */
+export const getTransactions = fetchTransactions;
+export const getTransaction = fetchTransactionById;
+
+export async function searchTransactions(
+  query: string,
+  limit = 10
+): Promise<(DbTransaction & { assessment?: RiskAssessment })[]> {
+  const result = await fetchTransactions({ search: query, limit });
+  return result.transactions;
+}
+
+export async function getRecentTransactions(
+  limit = 10,
+  customerId?: string
+): Promise<(DbTransaction & { assessment?: RiskAssessment })[]> {
+  if (isSupabaseConfigured) {
+    let q = supabase
+      .from("transactions")
+      .select("*, risk_assessments(*)")
+      .order("timestamp", { ascending: false })
+      .limit(limit);
+
+    if (customerId) {
+      q = q.eq("sender_name", customerId);
+    }
+
+    const { data } = await q;
+    if (data) {
+      return data.map((t: any) => ({
+        ...t,
+        assessment: Array.isArray(t.risk_assessments) ? t.risk_assessments[0] : t.risk_assessments,
+      }));
+    }
+  }
+
+  let list = localState.transactions;
+  if (customerId) {
+    list = list.filter((t) => t.sender_name === customerId);
+  }
+  return list.slice(0, limit).map((t) => ({
+    ...t,
+    assessment: localState.assessments[t.id],
+  }));
+}
+
+export async function getRelatedTransactions(
+  transactionId: string,
+  limit = 5
+): Promise<DbTransaction[]> {
+  const base = await fetchTransactionById(transactionId);
+  if (!base || !base.transaction) return [];
+
+  const { sender_name, receiver_name, device_id } = base.transaction;
+
+  if (isSupabaseConfigured) {
+    const { data } = await supabase
+      .from("transactions")
+      .select("*")
+      .neq("id", transactionId)
+      .or(`sender_name.eq.${sender_name},receiver_name.eq.${receiver_name},device_id.eq.${device_id}`)
+      .order("timestamp", { ascending: false })
+      .limit(limit);
+
+    if (data) return data;
+  }
+
+  return localState.transactions
+    .filter(
+      (t) =>
+        t.id !== transactionId &&
+        (t.sender_name === sender_name ||
+          t.receiver_name === receiver_name ||
+          t.device_id === device_id)
+    )
+    .slice(0, limit);
+}

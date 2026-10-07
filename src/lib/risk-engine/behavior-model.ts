@@ -47,3 +47,5 @@ export class CustomerBehaviorModel {
     };
   }
 }
+
+export const compareBehavioralBaseline = CustomerBehaviorModel.evaluate;

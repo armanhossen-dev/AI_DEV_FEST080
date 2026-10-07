@@ -12,6 +12,7 @@ export * from "./anomaly-scoring";
 export * from "./risk-fusion";
 export * from "./explanation-generation";
 export * from "./action-recommendation";
+export * from "./master-risk-service";
 
 /**
  * Evaluates a transaction through the complete multi-stage Sentinel Risk Engine:

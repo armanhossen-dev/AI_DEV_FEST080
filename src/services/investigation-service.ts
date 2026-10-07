@@ -268,3 +268,179 @@ export async function addInvestigationNote(
     }
   }
 }
+
+// Aliases for Phase 21
+export const getInvestigations = fetchInvestigations;
+export const getInvestigation = fetchInvestigationById;
+export const addInvestigatorNote = addInvestigationNote;
+
+export async function createInvestigation(params: {
+  transactionId: string;
+  assignedTo?: string;
+  priority?: RiskSeverity;
+  initialNotes?: string;
+}): Promise<InvestigationCase> {
+  const { transactionId, assignedTo = "Unassigned", priority = "high", initialNotes = "" } = params;
+  const nowIso = new Date().toISOString();
+
+  if (isSupabaseConfigured) {
+    const { data, error } = await supabase
+      .from("investigations")
+      .insert({
+        transaction_id: transactionId,
+        assigned_to: assignedTo,
+        status: "open",
+        priority,
+        investigator_notes: initialNotes,
+      })
+      .select()
+      .single();
+
+    if (!error && data) {
+      // Record case open event
+      await supabase.from("investigation_actions").insert({
+        investigation_id: data.id,
+        actor_name: assignedTo,
+        action_type: "opened_case",
+        action_details: { priority, timestamp: nowIso },
+      });
+      return data as InvestigationCase;
+    }
+  }
+
+  const localCase: InvestigationCase = {
+    id: `INV-${Date.now()}`,
+    transaction_id: transactionId,
+    assigned_to: assignedTo,
+    status: "open",
+    priority,
+    investigator_notes: initialNotes,
+    created_at: nowIso,
+    updated_at: nowIso,
+  };
+  localState.investigations.unshift(localCase);
+  return localCase;
+}
+
+export async function assignInvestigation(
+  investigationId: string,
+  assignee: string,
+  actorName: string
+): Promise<void> {
+  const nowIso = new Date().toISOString();
+  if (isSupabaseConfigured) {
+    await supabase.from("investigations").update({ assigned_to: assignee, updated_at: nowIso }).eq("id", investigationId);
+    await supabase.from("investigation_actions").insert({
+      investigation_id: investigationId,
+      actor_name: actorName,
+      action_type: "assigned_case",
+      action_details: { assigned_to: assignee, timestamp: nowIso },
+    });
+  }
+}
+
+export async function updateInvestigationStatus(
+  investigationId: string,
+  newStatus: InvestigationStatus,
+  actorName: string
+): Promise<void> {
+  const nowIso = new Date().toISOString();
+  if (isSupabaseConfigured) {
+    await supabase.from("investigations").update({ status: newStatus, updated_at: nowIso }).eq("id", investigationId);
+    await supabase.from("investigation_actions").insert({
+      investigation_id: investigationId,
+      actor_name: actorName,
+      action_type: "updated_status",
+      action_details: { new_status: newStatus, timestamp: nowIso },
+    });
+  }
+}
+
+export async function changePriority(
+  investigationId: string,
+  newPriority: RiskSeverity,
+  actorName: string
+): Promise<void> {
+  const nowIso = new Date().toISOString();
+  if (isSupabaseConfigured) {
+    await supabase.from("investigations").update({ priority: newPriority, updated_at: nowIso }).eq("id", investigationId);
+    await supabase.from("investigation_actions").insert({
+      investigation_id: investigationId,
+      actor_name: actorName,
+      action_type: "changed_priority",
+      action_details: { new_priority: newPriority, timestamp: nowIso },
+    });
+  }
+}
+
+export async function resolveInvestigation(
+  investigationId: string,
+  decision: InvestigationDecision,
+  notes: string,
+  actorName: string
+): Promise<void> {
+  const nowIso = new Date().toISOString();
+  if (isSupabaseConfigured) {
+    await supabase.from("investigations").update({
+      status: "resolved",
+      final_decision: decision,
+      investigator_notes: notes,
+      resolved_at: nowIso,
+      updated_at: nowIso,
+    }).eq("id", investigationId);
+
+    await supabase.from("investigation_actions").insert({
+      investigation_id: investigationId,
+      actor_name: actorName,
+      action_type: `decision_${decision}`,
+      action_details: { decision, notes, timestamp: nowIso },
+    });
+  }
+}
+
+// Phase 22 Explicit Human Actions
+export async function approveTransaction(transactionId: string, actorName: string, notes?: string) {
+  return performInvestigationDecision({ transactionId, decision: "approved", actorName, notes });
+}
+
+export async function holdTransaction(transactionId: string, actorName: string, notes?: string) {
+  return performInvestigationDecision({ transactionId, decision: "held", actorName, notes });
+}
+
+export async function blockTransaction(transactionId: string, actorName: string, notes?: string) {
+  return performInvestigationDecision({ transactionId, decision: "blocked", actorName, notes });
+}
+
+export async function escalateInvestigation(transactionId: string, actorName: string, notes?: string) {
+  const inv = await fetchInvestigationById(transactionId);
+  const nowIso = new Date().toISOString();
+  if (isSupabaseConfigured) {
+    await supabase.from("transactions").update({ transaction_status: "under_review" }).eq("id", transactionId);
+    if (inv) {
+      await supabase.from("investigations").update({ status: "escalated", priority: "critical", updated_at: nowIso }).eq("id", inv.id);
+      await supabase.from("investigation_actions").insert({
+        investigation_id: inv.id,
+        actor_name: actorName,
+        action_type: "escalated_case",
+        action_details: { notes: notes || "Escalated to Tier-2 incident review", timestamp: nowIso },
+      });
+    }
+  }
+  return { success: true, newStatus: "under_review" as TransactionStatus };
+}
+
+export async function markFalsePositive(transactionId: string, actorName: string, notes?: string) {
+  return performInvestigationDecision({ transactionId, decision: "false_positive", actorName, notes });
+}
+
+export async function getAuditTrail(investigationId: string): Promise<InvestigationAction[]> {
+  if (isSupabaseConfigured) {
+    const { data } = await supabase
+      .from("investigation_actions")
+      .select("*")
+      .eq("investigation_id", investigationId)
+      .order("created_at", { ascending: false });
+    if (data) return data;
+  }
+  return localState.actions.filter((a) => a.investigation_id === investigationId);
+}
