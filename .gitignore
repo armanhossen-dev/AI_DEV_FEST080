@@ -1,20 +1,22 @@
 # Dependencies
 /node_modules
+**/node_modules
 /.pnpm-store
 
-# Next.js build output
+# Next.js & Vite build output
 /.next/
 /out/
+/build
+/dist
+**/dist
 
 /.agents
 
-# Production
-/build
-/dist
-
 # Environment variables
-.env*.local
-.env
+**/.env
+**/.env*.local
+**/.env*
+!**/.env.example
 
 # Debug logs
 npm-debug.log*
@@ -36,6 +38,4 @@ pnpm-debug.log*
 extracted_make/
 scratch/
 *.tsbuildinfo
-
 .vercel
-.env*
