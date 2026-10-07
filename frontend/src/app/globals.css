@@ -14,11 +14,11 @@
   --bg-alt:              #E2E8F0;
   --surface-elevated:    #F8FAFC;
   
-  --line:                #E2E8F0;
-  --line-strong:         #CBD5E1;
-  --ink:                 #0F172A;
-  --muted:               #475569;
-  --subtle:              #64748B;
+  --line:                #CBD5E1;
+  --line-strong:         #94A3B8;
+  --ink:                 #090D14;
+  --muted:               #334155;
+  --subtle:              #475569;
 
   --navy:                #FFFFFF;
   --navy-light:          #F8FAFC;
@@ -27,15 +27,15 @@
   --brand-surface:       #FFFFFF;
   --brand-elevated:      #F8FAFC;
   --brand-card:          #FFFFFF;
-  --brand-border:        #E2E8F0;
-  --brand-border-subtle: #F1F5F9;
-  --brand-border-strong: #CBD5E1;
-  --brand-text:          #0F172A;
-  --brand-muted:         #475569;
-  --brand-subtle:        #64748B;
+  --brand-border:        #CBD5E1;
+  --brand-border-subtle: #E2E8F0;
+  --brand-border-strong: #94A3B8;
+  --brand-text:          #090D14;
+  --brand-muted:         #334155;
+  --brand-subtle:        #475569;
 
   --sidebar-bg:          #0E131A;
-  --topbar-bg:           rgba(255, 255, 255, 0.94);
+  --topbar-bg:           rgba(255, 255, 255, 0.96);
 
   /* Authentic upay Brand Tokens (Restrained Enterprise Accent) */
   --upay-gold:           #F59E0B;
@@ -570,28 +570,35 @@ body {
 }
 
 .btn-secondary:hover {
-  background: #1D2530;
+  background: var(--bg-alt);
   border-color: var(--line-strong);
+  color: var(--ink);
 }
 
 .btn-ghost {
   background: transparent;
-  color: #9AA6B2;
+  color: var(--muted);
 }
 
 .btn-ghost:hover {
-  background: #161C24;
-  color: #F4F7FA;
+  background: var(--surface-elevated);
+  color: var(--ink);
 }
 
 .btn-danger {
+  background: rgba(239, 68, 68, 0.12);
+  color: #DC2626;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.dark .btn-danger {
   background: rgba(239, 68, 68, 0.16);
   color: #F87171;
   border: 1px solid rgba(239, 68, 68, 0.35);
 }
 
 .btn-danger:hover {
-  background: rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.22);
   border-color: rgba(239, 68, 68, 0.5);
 }
 
@@ -611,36 +618,69 @@ body {
   white-space: nowrap;
   width: max-content;
   font-family: var(--font-mono, monospace);
+  transition: all 0.15s ease;
 }
 
+/* Light Theme Badges (Deep vibrant colors on subtle tints) */
 .badge-critical {
-  color: #F87171;
-  background: rgba(239, 68, 68, 0.14);
-  border: 1px solid rgba(239, 68, 68, 0.28);
+  color: #DC2626;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.32);
 }
 
 .badge-high {
-  color: #FB923C;
-  background: rgba(249, 115, 22, 0.14);
-  border: 1px solid rgba(249, 115, 22, 0.28);
+  color: #C2410C;
+  background: rgba(249, 115, 22, 0.12);
+  border: 1px solid rgba(249, 115, 22, 0.32);
 }
 
 .badge-medium {
-  color: #FBBF24;
-  background: rgba(245, 158, 11, 0.14);
-  border: 1px solid rgba(245, 158, 11, 0.28);
+  color: #B45309;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.32);
 }
 
 .badge-low {
-  color: #34D399;
-  background: rgba(16, 185, 129, 0.14);
-  border: 1px solid rgba(16, 185, 129, 0.28);
+  color: #047857;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.32);
 }
 
 .badge-info {
+  color: #1D4ED8;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.32);
+}
+
+/* Dark Theme Badges (Neon glowing pastels on deep tints) */
+.dark .badge-critical {
+  color: #F87171;
+  background: rgba(239, 68, 68, 0.16);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.dark .badge-high {
+  color: #FB923C;
+  background: rgba(249, 115, 22, 0.16);
+  border: 1px solid rgba(249, 115, 22, 0.35);
+}
+
+.dark .badge-medium {
+  color: #FBBF24;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.dark .badge-low {
+  color: #34D399;
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.dark .badge-info {
   color: #60A5FA;
-  background: rgba(59, 130, 246, 0.14);
-  border: 1px solid rgba(59, 130, 246, 0.28);
+  background: rgba(59, 130, 246, 0.16);
+  border: 1px solid rgba(59, 130, 246, 0.35);
 }
 
 /* ─── Cards & Workstation Panels ────────────────────────────────────── */
@@ -755,10 +795,10 @@ th {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  color: var(--subtle);
+  color: var(--muted);
   padding: 10px 16px;
   border-bottom: 1px solid var(--line);
-  background: #161C24;
+  background: var(--surface-elevated);
   white-space: nowrap;
 }
 
@@ -768,10 +808,11 @@ td {
   color: var(--ink);
   border-bottom: 1px solid var(--line);
   white-space: nowrap;
+  transition: background-color 0.12s ease;
 }
 
 tbody tr:hover td {
-  background: #161C24;
+  background: var(--bg-alt);
 }
 
 tbody tr:last-child td {
@@ -797,22 +838,25 @@ tbody tr:last-child td {
   border-radius: var(--radius-sm);
   padding: 0 10px;
   height: 34px;
-  background: #161C24;
+  background: var(--surface-elevated);
   color: var(--ink);
   font-size: 12.5px;
+  transition: all 0.15s ease;
 }
 
 .field:focus-within {
   border-color: #F59E0B;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15);
 }
 
 select.field, select {
-  background-color: #161C24;
+  background-color: var(--surface-elevated);
   color: var(--ink);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   padding: 0 8px;
   height: 34px;
+  transition: all 0.15s ease;
 }
 
 .filter-button {
@@ -823,7 +867,7 @@ select.field, select {
   border-radius: var(--radius-sm);
   padding: 0 10px;
   height: 34px;
-  background: #161C24;
+  background: var(--surface-elevated);
   color: var(--ink);
   cursor: pointer;
   transition: all 0.14s ease;
@@ -832,7 +876,7 @@ select.field, select {
 }
 
 .filter-button:hover {
-  background: #1E2632;
+  background: var(--bg-alt);
   border-color: var(--line-strong);
 }
 
@@ -851,9 +895,10 @@ select.field, select {
   right: 0;
   bottom: 0;
   width: min(520px, 100vw);
-  background: #11161D;
+  background: var(--surface);
+  color: var(--ink);
   border-left: 1px solid var(--line);
-  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.75);
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.35);
   z-index: 50;
   display: flex;
   flex-direction: column;
@@ -868,11 +913,11 @@ select.field, select {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #161C24;
-  color: #F4F7FA;
+  background: var(--surface);
+  color: var(--ink);
   padding: 10px 16px;
   border-radius: var(--radius-sm);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--shadow-lg);
   max-width: min(420px, calc(100vw - 32px));
   font-size: 12.5px;
   border: 1px solid #F59E0B;
@@ -885,7 +930,7 @@ select.field, select {
   left: var(--sidebar-w);
   right: 0;
   height: 56px;
-  background: rgba(17, 22, 29, 0.95);
+  background: var(--topbar-bg);
   backdrop-filter: blur(12px);
   border-top: 1px solid var(--line);
   display: flex;
@@ -893,6 +938,10 @@ select.field, select {
   justify-content: space-between;
   padding: 0 24px;
   z-index: 40;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.dark .action-bar {
   box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.5);
 }
 
@@ -990,13 +1039,14 @@ select.field, select {
 
 .tabs > div:hover, .tabs button:hover {
   color: var(--ink);
-  background: #161C24;
+  background: var(--bg-alt);
 }
 
 .tabs > div.active, .tabs button.active {
-  color: #F4F7FA;
-  background: #161C24;
+  color: var(--ink);
+  background: var(--surface-elevated);
   border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
 }
 
 /* ─── Monospace helpers ─────────────────────────────────────────────── */
@@ -1012,10 +1062,16 @@ select.field, select {
 .link {
   color: #38BDF8;
   cursor: pointer;
+  transition: color 0.15s ease;
 }
 
 .link:hover {
   text-decoration: underline;
+  color: #0284C7;
+}
+
+.dark .link:hover {
+  color: #7DD3FC;
 }
 
 .live-label {
@@ -1023,7 +1079,7 @@ select.field, select {
   align-items: center;
   gap: 6px;
   padding: 4px 9px;
-  background: #161C24;
+  background: var(--surface-elevated);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   font-size: 10.5px;
@@ -1037,4 +1093,105 @@ select.field, select {
   height: 6px;
   border-radius: 50%;
   background: #10B981;
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   High-Performance Enterprise Micro-Animations (60 FPS Fast Response)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 16px 4px rgba(245, 158, 11, 0.2);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes floatSubtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-spin-slow {
+  animation: spinSlow 14s linear infinite;
+}
+
+.animate-float {
+  animation: floatSubtle 3s ease-in-out infinite;
+}
+
+/* Fluid Hover Elevate for Interactive Workstation Cards */
+.card-base {
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.18s ease;
+  will-change: transform;
+}
+
+.card-base:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-md);
+}
+
+/* Interactive Button Response Animation */
+.btn {
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
 }

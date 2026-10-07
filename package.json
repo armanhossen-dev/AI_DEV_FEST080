@@ -4,17 +4,27 @@
   "private": true,
   "type": "module",
   "description": "upay Sentinel — AI-Powered Trust & Risk Intelligence Platform for Digital Financial Services",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "dev": "npm --prefix frontend run dev",
-    "dev:frontend": "npm --prefix frontend run dev",
-    "dev:backend": "npm --prefix backend run server",
-    "server": "npm --prefix backend run server",
+    "install:all": "npm install && npm --prefix frontend install --include=dev && npm --prefix backend install",
+    "postinstall": "npm --prefix frontend install --include=dev && npm --prefix backend install",
     "build": "npm --prefix frontend run build",
     "build:frontend": "npm --prefix frontend run build",
+    "build:all": "npm --prefix frontend run build",
     "start": "npm --prefix frontend run start",
+    "start:frontend": "npm --prefix frontend run start",
+    "start:backend": "npm --prefix backend run start",
+    "dev": "npm --prefix frontend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "server": "npm --prefix backend run start",
     "forwarder": "node scripts/port-5173-redirect.cjs"
   },
   "dependencies": {
+    "next": "^15.1.7",
     "@google/genai": "^2.27.0",
     "@google/generative-ai": "^0.24.0",
     "@supabase/supabase-js": "^2.49.1",

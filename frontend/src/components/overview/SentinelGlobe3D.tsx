@@ -63,7 +63,7 @@ export const SentinelGlobe3D: React.FC = () => {
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(0, 3, 11);
+    camera.position.set(0, 0.8, 12.8);
 
     const renderer = new THREE.WebGLRenderer({
       canvas,
@@ -388,8 +388,7 @@ export const SentinelGlobe3D: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full rounded-2xl overflow-hidden select-none border border-line bg-gradient-to-b from-[#090e1a] via-[#0c1424] to-[#070b14] text-white shadow-xl"
-      style={{ minHeight: "420px" }}
+      className="relative w-full h-[520px] md:h-[560px] rounded-2xl overflow-hidden select-none border border-brand-border dark:border-line bg-gradient-to-b from-[#080E1C] via-[#0B152A] to-[#050914] text-white shadow-xl dark:shadow-2xl transition-all duration-300"
     >
       {/* 3D WebGL Canvas */}
       <canvas
@@ -398,41 +397,41 @@ export const SentinelGlobe3D: React.FC = () => {
       />
 
       {/* Top Overlay: Title & Live Threat Badge */}
-      <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 backdrop-blur-md shadow-lg shadow-amber-500/10">
-            <Globe size={18} className="animate-spin-slow" />
+      <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-3 pointer-events-none z-10">
+        <div className="flex items-center gap-3 bg-slate-950/80 border border-slate-800/90 p-2 px-3 rounded-xl backdrop-blur-md shadow-lg pointer-events-auto">
+          <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-sm shrink-0">
+            <Globe size={16} className="animate-spin-slow" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-bold tracking-tight text-white flex items-center gap-1.5">
+              <h3 className="text-xs sm:text-sm font-bold tracking-tight text-white flex items-center gap-1.5">
                 Sentinel Geospatial Defense Grid
               </h3>
-              <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+              <span className="px-1.5 py-0.5 rounded text-[9.5px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 ACTIVE
               </span>
             </div>
-            <p className="text-[11px] text-slate-400">
-              National Digital Financial Infrastructure &middot; DIU CPC &times; upay Telemetry
+            <p className="text-[10.5px] text-slate-300 font-medium">
+              National Financial Infrastructure &middot; DIU CPC &times; upay Telemetry
             </p>
           </div>
         </div>
 
         {/* Live Metrics Header */}
-        <div className="hidden md:flex items-center gap-3 pointer-events-auto">
-          <div className="bg-slate-900/80 border border-slate-700/60 rounded-xl px-3 py-1.5 backdrop-blur-md flex items-center gap-2 text-xs">
+        <div className="hidden md:flex items-center gap-2 pointer-events-auto">
+          <div className="bg-slate-950/80 border border-slate-800/90 rounded-xl px-3 py-1.5 backdrop-blur-md flex items-center gap-2 text-xs shadow-lg">
             <Activity size={14} className="text-amber-400" />
-            <span className="text-slate-400">Stream Velocity:</span>
+            <span className="text-slate-300 font-medium">Velocity:</span>
             <span className="font-mono font-bold text-amber-300">{liveTps.toLocaleString()} TPS</span>
           </div>
 
           <button
             onClick={() => setAutoRotate(!autoRotate)}
-            className={`px-2.5 py-1.5 rounded-xl border text-xs font-medium transition-all backdrop-blur-md flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all backdrop-blur-md flex items-center gap-1.5 shadow-lg ${
               autoRotate
-                ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                : "bg-slate-800/80 text-slate-400 border-slate-700"
+                ? "bg-amber-500/25 text-amber-300 border-amber-500/50 hover:bg-amber-500/35"
+                : "bg-slate-900/80 text-slate-300 border-slate-700 hover:text-white"
             }`}
             title="Toggle Orbital Auto-Rotation"
           >
@@ -443,10 +442,10 @@ export const SentinelGlobe3D: React.FC = () => {
       </div>
 
       {/* Bottom Overlay: Hub Selectors & Live Telemetry Inspector */}
-      <div className="absolute bottom-4 left-4 right-4 flex flex-col md:flex-row items-stretch md:items-end justify-between gap-3 pointer-events-none">
+      <div className="absolute bottom-3.5 left-3.5 right-3.5 flex flex-col md:flex-row items-stretch md:items-end justify-between gap-3 pointer-events-none z-10">
         {/* Hub Selector Pills */}
-        <div className="flex flex-wrap items-center gap-1.5 pointer-events-auto bg-slate-950/70 p-1.5 rounded-xl border border-slate-800/80 backdrop-blur-md max-w-lg">
-          <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold px-2 py-1 flex items-center gap-1">
+        <div className="flex flex-wrap items-center gap-1.5 pointer-events-auto bg-slate-950/85 p-2 rounded-xl border border-slate-800/90 backdrop-blur-md shadow-xl max-w-lg">
+          <span className="text-[10px] uppercase tracking-wider text-slate-300 font-bold px-2 py-0.5 flex items-center gap-1 font-mono">
             <Radio size={11} className="text-amber-400" />
             Hubs:
           </span>
@@ -456,10 +455,10 @@ export const SentinelGlobe3D: React.FC = () => {
               <button
                 key={hub.name}
                 onClick={() => setActiveHub(hub)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
                   isSelected
-                    ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20"
-                    : "text-slate-300 hover:bg-slate-800/60 hover:text-white"
+                    ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/30 font-extrabold"
+                    : "text-slate-200 hover:bg-slate-800/90 hover:text-white"
                 }`}
               >
                 <span
@@ -473,38 +472,38 @@ export const SentinelGlobe3D: React.FC = () => {
         </div>
 
         {/* Selected Hub Telemetry Card */}
-        <div className="pointer-events-auto bg-slate-900/90 border border-slate-700/80 rounded-xl p-3 backdrop-blur-md shadow-2xl min-w-[280px]">
+        <div className="pointer-events-auto bg-slate-950/90 border border-slate-800/90 rounded-xl p-3 backdrop-blur-md shadow-2xl w-full md:w-80 shrink-0">
           <div className="flex items-center justify-between pb-1.5 border-b border-slate-800 mb-2">
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <span
                 className="w-2.5 h-2.5 rounded-full animate-ping"
                 style={{ backgroundColor: activeHub.hexColor }}
               />
               <span className="text-xs font-bold text-white">{activeHub.name}</span>
             </div>
-            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded font-mono ${
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded font-mono ${
               activeHub.threatLevel === "Shielded"
-                ? "bg-emerald-500/20 text-emerald-300"
+                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
                 : activeHub.threatLevel === "Elevated"
-                ? "bg-rose-500/20 text-rose-300"
-                : "bg-sky-500/20 text-sky-300"
+                ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
+                : "bg-sky-500/20 text-sky-300 border border-sky-500/30"
             }`}>
               {activeHub.threatLevel}
             </span>
           </div>
 
-          <p className="text-[11px] text-slate-300 mb-2 leading-tight">
+          <p className="text-[11.5px] text-slate-200 mb-2.5 leading-snug font-medium">
             {activeHub.role}
           </p>
 
           <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
-            <div className="bg-slate-950/60 p-1.5 rounded-lg border border-slate-800">
-              <span className="text-slate-400 block text-[9px]">LOCAL TPS</span>
-              <b className="text-amber-400 font-bold">{activeHub.tps} txns/s</b>
+            <div className="bg-slate-900/90 p-2 rounded-lg border border-slate-800/90">
+              <span className="text-slate-400 block text-[9.5px] font-semibold">LOCAL VELOCITY</span>
+              <b className="text-amber-400 font-bold text-xs">{activeHub.tps} txns/s</b>
             </div>
-            <div className="bg-slate-950/60 p-1.5 rounded-lg border border-slate-800">
-              <span className="text-slate-400 block text-[9px]">AI INTERCEPT</span>
-              <b className="text-emerald-400 font-bold">&lt; 14ms Latency</b>
+            <div className="bg-slate-900/90 p-2 rounded-lg border border-slate-800/90">
+              <span className="text-slate-400 block text-[9.5px] font-semibold">AI INFERENCE</span>
+              <b className="text-emerald-400 font-bold text-xs">&lt; 14ms Latency</b>
             </div>
           </div>
         </div>

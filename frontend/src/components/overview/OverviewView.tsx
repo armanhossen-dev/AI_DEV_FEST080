@@ -171,7 +171,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           <button
             onClick={() => handleTriggerScenario("ato")}
             disabled={injectingScenario !== null}
-            className="p-3 rounded border border-brand-border bg-brand-elevated hover:border-risk-critical/40 hover:bg-[#1E1922] text-left transition-all flex flex-col justify-between group disabled:opacity-50"
+            className="p-3 rounded-lg border border-brand-border bg-brand-elevated hover:border-risk-critical/50 hover:bg-rose-50/70 dark:hover:bg-[#1E1922] hover:-translate-y-0.5 active:scale-[0.98] text-left transition-all duration-150 flex flex-col justify-between group disabled:opacity-50 shadow-sm"
           >
             <div>
               <div className="flex items-center justify-between">
@@ -183,9 +183,9 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 PIN reset + nocturnal cash-out (৳32,000) from unfamiliar device in Chattogram.
               </p>
             </div>
-            <div className="mt-3 pt-2 border-t border-brand-border flex items-center justify-between text-[10px] font-mono text-rose-400">
+            <div className="mt-3 pt-2 border-t border-brand-border flex items-center justify-between text-[10px] font-mono text-rose-600 dark:text-rose-400 font-semibold">
               <span>SCORE: ~87/100</span>
-              <span className="flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform text-brand-text">
+              <span className="flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform text-brand-text font-medium">
                 Inject &rarr;
               </span>
             </div>
@@ -195,7 +195,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           <button
             onClick={() => handleTriggerScenario("mule")}
             disabled={injectingScenario !== null}
-            className="p-3 rounded border border-brand-border bg-brand-elevated hover:border-risk-critical/40 hover:bg-[#1E1922] text-left transition-all flex flex-col justify-between group disabled:opacity-50"
+            className="p-3 rounded-lg border border-brand-border bg-brand-elevated hover:border-risk-critical/50 hover:bg-rose-50/70 dark:hover:bg-[#1E1922] hover:-translate-y-0.5 active:scale-[0.98] text-left transition-all duration-150 flex flex-col justify-between group disabled:opacity-50 shadow-sm"
           >
             <div>
               <div className="flex items-center justify-between">
@@ -207,9 +207,9 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 ৳48,500 transferred to U-8831 (Cluster #17 conduit) via shared device DEV-8821.
               </p>
             </div>
-            <div className="mt-3 pt-2 border-t border-brand-border flex items-center justify-between text-[10px] font-mono text-rose-400">
+            <div className="mt-3 pt-2 border-t border-brand-border flex items-center justify-between text-[10px] font-mono text-rose-600 dark:text-rose-400 font-semibold">
               <span>SCORE: ~94/100</span>
-              <span className="flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform text-brand-text">
+              <span className="flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform text-brand-text font-medium">
                 Inject &rarr;
               </span>
             </div>
@@ -219,7 +219,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           <button
             onClick={() => handleTriggerScenario("sim_swap")}
             disabled={injectingScenario !== null}
-            className="p-3 rounded border border-brand-border bg-brand-elevated hover:border-risk-critical/40 hover:bg-[#1E1922] text-left transition-all flex flex-col justify-between group disabled:opacity-50"
+            className="p-3 rounded-lg border border-brand-border bg-brand-elevated hover:border-risk-critical/50 hover:bg-rose-50/70 dark:hover:bg-[#1E1922] hover:-translate-y-0.5 active:scale-[0.98] text-left transition-all duration-150 flex flex-col justify-between group disabled:opacity-50 shadow-sm"
           >
             <div>
               <div className="flex items-center justify-between">
@@ -231,9 +231,9 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 Max limit drain (৳98,000) within 10 min of carrier SIM swap from emulator.
               </p>
             </div>
-            <div className="mt-3 pt-2 border-t border-brand-border flex items-center justify-between text-[10px] font-mono text-rose-400">
+            <div className="mt-3 pt-2 border-t border-brand-border flex items-center justify-between text-[10px] font-mono text-rose-600 dark:text-rose-400 font-semibold">
               <span>SCORE: ~98/100</span>
-              <span className="flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform text-brand-text">
+              <span className="flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform text-brand-text font-medium">
                 Inject &rarr;
               </span>
             </div>
@@ -243,7 +243,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           <button
             onClick={() => handleTriggerScenario("velocity")}
             disabled={injectingScenario !== null}
-            className="p-3 rounded border border-brand-border bg-brand-elevated hover:border-risk-high/40 hover:bg-[#201C18] text-left transition-all flex flex-col justify-between group disabled:opacity-50"
+            className="p-3 rounded-lg border border-brand-border bg-brand-elevated hover:border-risk-high/50 hover:bg-amber-50/70 dark:hover:bg-[#201C18] hover:-translate-y-0.5 active:scale-[0.98] text-left transition-all duration-150 flex flex-col justify-between group disabled:opacity-50 shadow-sm"
           >
             <div>
               <div className="flex items-center justify-between">
@@ -255,9 +255,9 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 6 rapid transfers skirting beneath Bangladesh Bank regulatory threshold.
               </p>
             </div>
-            <div className="mt-3 pt-2 border-t border-brand-border flex items-center justify-between text-[10px] font-mono text-amber-400">
+            <div className="mt-3 pt-2 border-t border-brand-border flex items-center justify-between text-[10px] font-mono text-amber-600 dark:text-amber-400 font-semibold">
               <span>SCORE: ~80/100</span>
-              <span className="flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform text-brand-text">
+              <span className="flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform text-brand-text font-medium">
                 Inject &rarr;
               </span>
             </div>
@@ -267,7 +267,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           <button
             onClick={() => handleTriggerScenario("normal")}
             disabled={injectingScenario !== null}
-            className="p-3 rounded border border-brand-border bg-brand-elevated hover:border-risk-low/40 hover:bg-[#15201A] text-left transition-all flex flex-col justify-between group disabled:opacity-50"
+            className="p-3 rounded-lg border border-brand-border bg-brand-elevated hover:border-risk-low/50 hover:bg-emerald-50/70 dark:hover:bg-[#15201A] hover:-translate-y-0.5 active:scale-[0.98] text-left transition-all duration-150 flex flex-col justify-between group disabled:opacity-50 shadow-sm"
           >
             <div>
               <div className="flex items-center justify-between">
@@ -279,9 +279,9 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 Routine daytime merchant grocery payment (৳2,450) from trusted device.
               </p>
             </div>
-            <div className="mt-3 pt-2 border-t border-brand-border flex items-center justify-between text-[10px] font-mono text-emerald-400">
+            <div className="mt-3 pt-2 border-t border-brand-border flex items-center justify-between text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
               <span>SCORE: ~18/100</span>
-              <span className="flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform text-brand-text">
+              <span className="flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform text-brand-text font-medium">
                 Approve &rarr;
               </span>
             </div>
@@ -364,7 +364,16 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
                 {/* Gridlines */}
                 {[20, 60, 100, 140].map((y) => (
-                  <line key={y} x1="0" x2="720" y1={y} y2={y} stroke="#252D37" strokeWidth="1" />
+                  <line
+                    key={y}
+                    x1="0"
+                    x2="720"
+                    y1={y}
+                    y2={y}
+                    stroke="currentColor"
+                    className="text-slate-200 dark:text-[#252D37]"
+                    strokeWidth="1"
+                  />
                 ))}
 
                 {/* Normal Volume Area Fill */}
@@ -399,7 +408,15 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                   { x: 630, y: 112, label: "TXN-37LM" },
                 ].map((pt, i) => (
                   <g key={i}>
-                    <circle cx={pt.x} cy={pt.y} r="4" fill="#EF4444" stroke="#0B0F14" strokeWidth="1.5" />
+                    <circle
+                      cx={pt.x}
+                      cy={pt.y}
+                      r="4"
+                      fill="#EF4444"
+                      stroke="currentColor"
+                      className="text-white dark:text-[#0B0F14]"
+                      strokeWidth="1.5"
+                    />
                   </g>
                 ))}
               </svg>
