@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "src/vite-env.d.ts",
+    "src/main.tsx",
+    "src/App.tsx",
+    "src/types/**/*.ts",
+    "src/contexts/**/*.tsx",
+    "src/layouts/**/*.tsx",
+    "src/pages/**/*.tsx",
+    "src/services/**/*.ts",
+    "src/lib/risk-engine/**/*.ts",
+    "src/lib/firebase/**/*.ts",
+    "src/lib/supabase/**/*.ts",
+    "src/components/layout/ProtectedRoute.tsx",
+    "src/components/simulation/ScenarioRunnerModal.tsx",
+    "src/tests/**/*.ts",
+    "src/tests/**/*.tsx",
+    "vite.config.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}
