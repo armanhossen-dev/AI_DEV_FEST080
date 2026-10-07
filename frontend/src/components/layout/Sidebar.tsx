@@ -17,6 +17,7 @@ import {
   Moon,
   Sun,
   HelpCircle,
+  Cpu,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -27,6 +28,17 @@ interface SidebarProps {
   onClose?: () => void;
   onSettingsClick?: () => void;
   onTourClick?: () => void;
+  isDarkMode?: boolean;
+  onToggleTheme?: () => void;
+}
+
+interface NavGroup {
+  section: string;
+  items: {
+    id: NavigationPage;
+    label: string;
+    icon: React.ReactNode;
+  }[];
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -37,28 +49,38 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onClose,
   onSettingsClick,
   onTourClick,
+  isDarkMode = false,
+  onToggleTheme,
 }) => {
-  const [isDark, setIsDark] = React.useState(false);
-
-  React.useEffect(() => {
-    // Check initial
-    setIsDark(document.documentElement.classList.contains("dark"));
-  }, []);
-
-  const toggleTheme = () => {
-    const isNowDark = document.documentElement.classList.toggle("dark");
-    setIsDark(isNowDark);
-  };
-
-  const navItems: { id: NavigationPage; label: string; icon: React.ReactNode }[] = [
-    { id: "overview",      label: "Overview",            icon: <LayoutGrid  size={17} /> },
-    { id: "transactions",  label: "Transaction Monitor", icon: <Activity    size={17} /> },
-    { id: "risk",          label: "Risk Intelligence",   icon: <ShieldAlert size={17} /> },
-    { id: "network",       label: "Fraud Network",       icon: <Share2      size={17} /> },
-    { id: "investigations",label: "Investigations",      icon: <Briefcase   size={17} /> },
-    { id: "customers",     label: "Customers",           icon: <Users       size={17} /> },
-    { id: "alerts",        label: "Alerts",              icon: <Bell        size={17} /> },
-    { id: "analytics",     label: "Analytics",           icon: <BarChart3   size={17} /> },
+  const navGroups: NavGroup[] = [
+    {
+      section: "OVERVIEW",
+      items: [
+        { id: "overview", label: "Executive Console", icon: <LayoutGrid size={15} /> },
+      ],
+    },
+    {
+      section: "INTELLIGENCE",
+      items: [
+        { id: "transactions", label: "Transaction Monitor", icon: <Activity size={15} /> },
+        { id: "risk", label: "Risk Signals & XAI", icon: <ShieldAlert size={15} /> },
+        { id: "network", label: "Fraud Network Topology", icon: <Share2 size={15} /> },
+      ],
+    },
+    {
+      section: "OPERATIONS",
+      items: [
+        { id: "investigations", label: "Investigation Cases", icon: <Briefcase size={15} /> },
+        { id: "customers", label: "Customer 360", icon: <Users size={15} /> },
+        { id: "alerts", label: "Alert Triage", icon: <Bell size={15} /> },
+      ],
+    },
+    {
+      section: "GOVERNANCE",
+      items: [
+        { id: "analytics", label: "Model Benchmarks & SAR", icon: <BarChart3 size={15} /> },
+      ],
+    },
   ];
 
   const handleNav = (page: NavigationPage) => {
@@ -85,70 +107,73 @@ export const Sidebar: React.FC<SidebarProps> = ({
           onKeyDown={(e) => e.key === "Enter" && handleNav("overview")}
         >
           <div className="brand-mark">
-            <ShieldCheck size={20} strokeWidth={2.5} />
+            <ShieldCheck size={18} strokeWidth={2.5} />
           </div>
           <div className="flex-1 min-w-0">
             <div className="brand-name">
               <span>upay</span> Sentinel
             </div>
-            <div className="brand-sub">Fraud Defense Cloud</div>
+            <div className="brand-sub">Trust &amp; Risk Platform</div>
           </div>
           {/* Close button on mobile */}
           <button
             onClick={(e) => { e.stopPropagation(); onClose?.(); }}
-            className="hidden md:hidden p-1 rounded text-[#6b8880] hover:text-white transition-colors"
-            style={{ display: "var(--show-close-btn, none)" }}
+            className="md:hidden p-1 rounded text-slate-400 hover:text-white transition-colors"
             aria-label="Close sidebar"
           >
-            <X size={16} />
+            <X size={15} />
           </button>
         </div>
 
-        {/* Nav Label */}
-        <div className="nav-label">Intelligence Suite</div>
+        {/* Categorized Navigation */}
+        <nav className="flex-1 py-1 space-y-3" role="navigation">
+          {navGroups.map((group) => (
+            <div key={group.section}>
+              <div className="nav-section-title">{group.section}</div>
+              <div className="space-y-0.5">
+                {group.items.map((item) => {
+                  const isActive =
+                    currentPage === item.id ||
+                    (currentPage === "investigation" && item.id === "investigations");
 
-        {/* Navigation */}
-        <nav className="flex-1 space-y-px" role="navigation">
-          {navItems.map((item) => {
-            const isActive =
-              currentPage === item.id ||
-              (currentPage === "investigation" && item.id === "investigations");
-
-            return (
-              <div
-                key={item.id}
-                role="button"
-                tabIndex={0}
-                onClick={() => handleNav(item.id)}
-                onKeyDown={(e) => e.key === "Enter" && handleNav(item.id)}
-                className={`nav-item nav-${item.id} ${isActive ? "active" : ""}`}
-                aria-current={isActive ? "page" : undefined}
-              >
-                <span className="shrink-0" aria-hidden="true">{item.icon}</span>
-                <span className="flex-1 truncate">{item.label}</span>
-                {item.id === "alerts" && unreadAlertsCount > 0 && (
-                  <span className="nav-count" aria-label={`${unreadAlertsCount} unread`}>
-                    {unreadAlertsCount}
-                  </span>
-                )}
+                  return (
+                    <div
+                      key={item.id}
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => handleNav(item.id)}
+                      onKeyDown={(e) => e.key === "Enter" && handleNav(item.id)}
+                      className={`nav-item nav-${item.id} ${isActive ? "active" : ""}`}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      <span className="shrink-0" aria-hidden="true">{item.icon}</span>
+                      <span className="flex-1 truncate">{item.label}</span>
+                      {item.id === "alerts" && unreadAlertsCount > 0 && (
+                        <span className="nav-count" aria-label={`${unreadAlertsCount} unread`}>
+                          {unreadAlertsCount}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
-            );
-          })}
+            </div>
+          ))}
         </nav>
 
-        {/* Sidebar Bottom */}
-        <div className="sidebar-bottom pt-4">
+        {/* Sidebar Bottom Dock */}
+        <div className="sidebar-bottom pt-2 border-t border-brand-borderSubtle">
           {/* Engine Status */}
           <div className="engine-status-box">
             <span className="pulse" aria-hidden="true" />
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between">
-                <b>Sentinel Neural AI</b>
-                <span className="text-[9px] font-mono font-bold text-emerald-400 bg-emerald-500/20 px-1 py-0.5 rounded">
-                  96.4%
+                <b>Risk Engine Active</b>
+                <span className="text-[9px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-1 py-0.2 rounded border border-emerald-500/20">
+                  &lt; 2ms
                 </span>
               </div>
-              <small>DIU CPC × upay Node 01</small>
+              <small>DIU CPC &times; upay Node 01</small>
             </div>
           </div>
 
@@ -157,32 +182,32 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="avatar" aria-hidden="true">AH</div>
             <div className="profile-info">
               <b>Arman Hossen</b>
-              <small>Senior Fraud Analyst</small>
+              <small>Lead Risk Analyst</small>
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-0.5">
               <button
-                title="Toggle Dark Theme (Orange Accent)"
-                onClick={toggleTheme}
-                className="text-[#516b62] hover:text-white transition-colors p-1 rounded flex-shrink-0"
+                title={isDarkMode ? "Switch to Light Console" : "Switch to Cyber Dark Mode"}
+                onClick={onToggleTheme}
+                className="text-slate-400 hover:text-amber-400 transition-colors p-1 rounded hover:bg-brand-elevated"
                 aria-label="Toggle Theme"
               >
-                {isDark ? <Sun size={15} /> : <Moon size={15} />}
+                {isDarkMode ? <Sun size={14} /> : <Moon size={14} />}
               </button>
               <button
                 title="Start App Tour"
                 onClick={onTourClick}
-                className="text-[#516b62] hover:text-white transition-colors p-1 rounded flex-shrink-0"
+                className="text-slate-400 hover:text-white transition-colors p-1 rounded hover:bg-brand-elevated"
                 aria-label="Start Tour"
               >
-                <HelpCircle size={15} />
+                <HelpCircle size={14} />
               </button>
               <button
                 title="System Settings"
                 onClick={onSettingsClick}
-                className="btn-settings text-[#516b62] hover:text-white transition-colors p-1 rounded flex-shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/50"
+                className="btn-settings text-slate-400 hover:text-white transition-colors p-1 rounded hover:bg-brand-elevated"
                 aria-label="Settings"
               >
-                <Settings size={15} />
+                <Settings size={14} />
               </button>
             </div>
           </div>

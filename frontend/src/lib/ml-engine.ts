@@ -13,10 +13,11 @@ export class FraudDetectionModel {
   async trainModel(transactions: Transaction[]) {
     if (this.isTrained) return;
 
-    const tf = await this.loadTF();
+    const tfModule: any = await this.loadTF();
+    const tf = tfModule.default || tfModule;
     
     // 1. Define Architecture: Simple Sequential Neural Network
-    this.model = tf.sequential();
+    this.model = (tf.default || tf).sequential();
     
     this.model.add(tf.layers.dense({
       inputShape: [5], // Features: [amountRatio, isNewDevice, isOffHours, velocityFlag, locationAnomaly]

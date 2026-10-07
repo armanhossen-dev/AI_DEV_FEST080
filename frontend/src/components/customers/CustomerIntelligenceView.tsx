@@ -39,164 +39,173 @@ export const CustomerIntelligenceView: React.FC<CustomerIntelligenceViewProps> =
       {/* Page Header */}
       <div className="page-header">
         <div>
-          <div className="eyebrow">CUSTOMER 360 & BEHAVIORAL PROFILING</div>
-          <h1 className="page-title">Customer Intelligence</h1>
-          <p className="page-subtitle">
-            Longitudinal behavioral baselines, deviation anomalies, and risk profile for customer {customer.id}
+          <div className="eyebrow flex items-center gap-1.5 text-brand-subtle">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            CUSTOMER 360 &bull; LONGITUDINAL BEHAVIORAL PROFILING
+          </div>
+          <h1 className="page-title text-brand-text">Customer Risk Dossier</h1>
+          <p className="page-subtitle text-brand-muted">
+            90-day behavioral baselines, deviation anomalies, and hardware pairing history for wallet {customer.id}
           </p>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="badge badge-high text-xs px-2.5 py-1">HIGH RISK PROFILE</span>
+        <div className="flex items-center gap-2.5">
+          <span className="badge badge-high text-xs px-2.5 py-0.5">HIGH RISK PROFILE</span>
           <button
             onClick={() => onNavigate("investigation")}
             className="btn btn-primary text-xs flex items-center gap-1.5"
           >
             <span>Open Case INV-1042</span>
-            <ArrowRight size={14} />
+            <ArrowRight size={13} />
           </button>
         </div>
       </div>
 
       {/* Customer Header Card */}
-      <div className="grid grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5">
         {/* Profile Card */}
-        <div className="col-span-5 card-base customer-profile p-5 flex items-center gap-4">
-          <div className="customer-avatar text-xl font-bold">U</div>
-          <div className="flex-1">
-            <div className="eyebrow">VERIFIED MFS WALLET</div>
-            <h2 className="text-xl font-bold text-gray-900">{customer.name}</h2>
-            <div className="text-xs text-gray-500 mt-0.5">
-              <span>{customer.id}</span> · <span>{customer.phone}</span>
+        <div className="lg:col-span-5 card-base p-4 flex items-center gap-3.5 border border-brand-border bg-brand-surface">
+          <div className="w-11 h-11 rounded bg-brand-elevated text-upay-gold border border-brand-border flex items-center justify-center font-bold text-lg shrink-0">
+            U
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="eyebrow text-brand-subtle text-[9.5px]">VERIFIED MFS ACCOUNT</div>
+            <h2 className="text-base font-bold text-brand-text truncate">{customer.name}</h2>
+            <div className="text-xs text-brand-muted mt-0.5 font-mono">
+              <span>{customer.id}</span> &middot; <span>{customer.phone}</span>
             </div>
-            <div className="mt-2 flex items-center gap-2">
-              <span className="badge badge-low text-[10px] flex items-center gap-1">
-                <CheckCircle2 size={11} /> KYC Verified
+            <div className="mt-1.5 flex items-center gap-2">
+              <span className="badge badge-low text-[9px] flex items-center gap-1">
+                <CheckCircle2 size={10} /> KYC Verified
               </span>
-              <span className="text-[11px] text-gray-400">Since March 2022</span>
+              <span className="text-[10.5px] text-brand-subtle">Since March 2022</span>
             </div>
           </div>
 
-          <div className="risk-customer pl-4 border-l border-gray-100 text-center">
-            <span className="text-[10px] text-gray-400 uppercase font-semibold">
+          <div className="pl-3.5 border-l border-brand-border text-center shrink-0">
+            <span className="text-[9.5px] text-brand-subtle uppercase font-mono font-semibold">
               Risk Score
             </span>
-            <b className="text-2xl text-amber-600 block mt-0.5">{customer.riskScore}</b>
-            <span className="text-[9.5px] text-gray-400">/ 100</span>
+            <b className="text-xl text-rose-400 block mt-0.5 font-mono">{customer.riskScore}</b>
+            <span className="text-[9.5px] text-brand-subtle font-mono">/ 100</span>
           </div>
         </div>
 
         {/* 5 Stats Grid */}
-        <div className="col-span-7 card-base profile-stats p-4 grid grid-cols-5 divide-x divide-gray-100 text-center">
+        <div className="lg:col-span-7 card-base p-3 grid grid-cols-5 divide-x divide-brand-border text-center border border-brand-border bg-brand-surface">
           <div className="px-2">
-            <span className="text-[11px] text-gray-400 font-medium block">Account Age</span>
-            <b className="text-sm font-bold text-gray-900 block mt-1">{customer.accountAge}</b>
+            <span className="text-[10.5px] text-brand-muted font-medium block">Account Age</span>
+            <b className="text-xs font-bold text-brand-text block mt-1 font-mono">{customer.accountAge}</b>
           </div>
           <div className="px-2">
-            <span className="text-[11px] text-gray-400 font-medium block">30d Volume</span>
-            <b className="text-sm font-bold text-gray-900 block mt-1">৳1.42M</b>
+            <span className="text-[10.5px] text-brand-muted font-medium block">30d Volume</span>
+            <b className="text-xs font-bold text-brand-text block mt-1 font-mono">৳1.42M</b>
           </div>
           <div className="px-2">
-            <span className="text-[11px] text-gray-400 font-medium block">Avg Transfer</span>
-            <b className="text-sm font-bold text-gray-900 block mt-1">৳6,800</b>
+            <span className="text-[10.5px] text-brand-muted font-medium block">Avg Transfer</span>
+            <b className="text-xs font-bold text-brand-text block mt-1 font-mono">৳6,800</b>
           </div>
           <div className="px-2">
-            <span className="text-[11px] text-gray-400 font-medium block">Known Devices</span>
-            <b className="text-sm font-bold text-gray-900 block mt-1">2 Devices</b>
+            <span className="text-[10.5px] text-brand-muted font-medium block">Known Devices</span>
+            <b className="text-xs font-bold text-brand-text block mt-1 font-mono">2 Devices</b>
           </div>
           <div className="px-2">
-            <span className="text-[11px] text-gray-400 font-medium block">Known Hubs</span>
-            <b className="text-sm font-bold text-gray-900 block mt-1">3 Locations</b>
+            <span className="text-[10.5px] text-brand-muted font-medium block">Known Hubs</span>
+            <b className="text-xs font-bold text-brand-text block mt-1 font-mono">3 Locations</b>
           </div>
         </div>
       </div>
 
       {/* Baseline vs Deviations Grid */}
-      <div className="grid grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5">
         {/* Left: Behavioral Baseline (90 days) */}
-        <div className="col-span-6 card-base p-5">
-          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+        <div className="lg:col-span-6 card-base p-4 border border-brand-border bg-brand-surface">
+          <div className="flex items-center justify-between pb-2.5 border-b border-brand-border">
             <div>
-              <h2 className="text-sm font-bold text-gray-900">Behavioral Baseline</h2>
-              <p className="text-xs text-gray-500">
-                Machine-learned habit profile over previous 90 days
+              <h2 className="text-xs font-bold text-brand-text uppercase tracking-wide">
+                Behavioral Baseline (90 Days)
+              </h2>
+              <p className="text-[11px] text-brand-muted">
+                Trained distribution profile across habit vectors
               </p>
             </div>
-            <span className="text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-semibold">
+            <span className="text-[9.5px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded font-mono font-semibold">
               90-DAY WINDOW
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 mt-4">
-            <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
-              <span className="text-gray-400 text-xs flex items-center gap-1.5">
-                <CreditCard size={14} className="text-emerald-700" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-3">
+            <div className="p-2.5 bg-brand-elevated rounded border border-brand-border">
+              <span className="text-brand-subtle text-xs flex items-center gap-1.5">
+                <CreditCard size={13} className="text-upay-gold" />
                 Average Transaction
               </span>
-              <b className="text-base font-bold text-gray-900 mt-1 block">৳6,800 BDT</b>
-              <span className="text-[10px] text-gray-400">Std deviation ±৳2,100</span>
+              <b className="text-sm font-bold text-brand-text mt-1 block font-mono">৳6,800 BDT</b>
+              <span className="text-[10px] text-brand-subtle font-mono">Std dev &plusmn;৳2,100</span>
             </div>
 
-            <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
-              <span className="text-gray-400 text-xs flex items-center gap-1.5">
-                <Clock size={14} className="text-emerald-700" />
+            <div className="p-2.5 bg-brand-elevated rounded border border-brand-border">
+              <span className="text-brand-subtle text-xs flex items-center gap-1.5">
+                <Clock size={13} className="text-upay-gold" />
                 Active Hours
               </span>
-              <b className="text-base font-bold text-gray-900 mt-1 block">
+              <b className="text-sm font-bold text-brand-text mt-1 block font-mono">
                 10:00 AM – 09:00 PM
               </b>
-              <span className="text-[10px] text-gray-400">0% historic activity past 11 PM</span>
+              <span className="text-[10px] text-brand-subtle font-mono">0% historic activity past 11 PM</span>
             </div>
 
-            <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
-              <span className="text-gray-400 text-xs flex items-center gap-1.5">
-                <Smartphone size={14} className="text-emerald-700" />
+            <div className="p-2.5 bg-brand-elevated rounded border border-brand-border">
+              <span className="text-brand-subtle text-xs flex items-center gap-1.5">
+                <Smartphone size={13} className="text-upay-gold" />
                 Trusted Hardware
               </span>
-              <b className="text-base font-bold text-gray-900 mt-1 block">
+              <b className="text-sm font-bold text-brand-text mt-1 block font-mono">
                 DEV-2211 (iPhone)
               </b>
-              <span className="text-[10px] text-gray-400">Paired since Nov 2023</span>
+              <span className="text-[10px] text-brand-subtle font-mono">Paired since Nov 2023</span>
             </div>
 
-            <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
-              <span className="text-gray-400 text-xs flex items-center gap-1.5">
-                <MapPin size={14} className="text-emerald-700" />
+            <div className="p-2.5 bg-brand-elevated rounded border border-brand-border">
+              <span className="text-brand-subtle text-xs flex items-center gap-1.5">
+                <MapPin size={13} className="text-upay-gold" />
                 Primary Location
               </span>
-              <b className="text-base font-bold text-gray-900 mt-1 block">Gulshan, Dhaka</b>
-              <span className="text-[10px] text-gray-400">Base cell tower ID #4092</span>
+              <b className="text-sm font-bold text-brand-text mt-1 block">Gulshan, Dhaka</b>
+              <span className="text-[10px] text-brand-subtle font-mono">Base cell tower ID #4092</span>
             </div>
           </div>
         </div>
 
         {/* Right: Recent Deviations */}
-        <div className="col-span-6 card-base p-5">
-          <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+        <div className="lg:col-span-6 card-base p-4 border border-brand-border bg-brand-surface">
+          <div className="flex items-center justify-between pb-2.5 border-b border-brand-border">
             <div>
-              <h2 className="text-sm font-bold text-gray-900">Recent Behavioral Deviations</h2>
-              <p className="text-xs text-gray-500">
-                Significant vector departures detected by Isolation Forest
+              <h2 className="text-xs font-bold text-brand-text uppercase tracking-wide">
+                Recent Behavioral Departures
+              </h2>
+              <p className="text-[11px] text-brand-muted">
+                Statistically significant deviations detected by Isolation Forest
               </p>
             </div>
-            <span className="badge badge-high text-[10px]">3 ANOMALIES</span>
+            <span className="badge badge-high text-[9.5px]">3 ANOMALIES</span>
           </div>
 
-          <div className="divide-y divide-gray-100 mt-2">
-            {customer.recentDeviations.map((dev: any, i: number) => (
-              <div key={i} className="py-3 flex items-center gap-3">
+          <div className="divide-y divide-brand-border mt-1">
+            {customer.recentDeviations.map((dev, i) => (
+              <div key={i} className="py-2.5 flex items-center gap-3">
                 <div
-                  className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
+                  className={`w-6 h-6 rounded border flex items-center justify-center font-bold text-xs shrink-0 font-mono ${
                     dev.severity === "Critical"
-                      ? "bg-rose-100 text-rose-700"
-                      : "bg-amber-100 text-amber-800"
+                      ? "bg-rose-500/10 text-rose-400 border-rose-500/30"
+                      : "bg-orange-500/10 text-orange-400 border-orange-500/30"
                   }`}
                 >
                   !
                 </div>
                 <div className="flex-1 text-xs">
-                  <b className="text-gray-900 block">{dev.title}</b>
-                  <p className="text-gray-600">{dev.value}</p>
-                  <span className="text-[10px] text-gray-400 font-mono">
+                  <b className="text-brand-text block">{dev.title}</b>
+                  <p className="text-brand-muted text-[11.5px]">{dev.value}</p>
+                  <span className="text-[10px] text-brand-subtle font-mono">
                     {dev.timestamp}
                   </span>
                 </div>
@@ -213,27 +222,29 @@ export const CustomerIntelligenceView: React.FC<CustomerIntelligenceViewProps> =
         </div>
       </div>
 
-      {/* 30-Day Transaction Timeline Chart */}
-      <div className="card-base transaction-timeline p-5">
-        <div className="flex items-center justify-between pb-2 border-b border-gray-100">
+      {/* 30-Day Transaction Volume Timeline */}
+      <div className="card-base p-4 border border-brand-border bg-brand-surface">
+        <div className="flex items-center justify-between pb-2 border-b border-brand-border">
           <div>
-            <h2 className="text-sm font-bold text-gray-900">30-Day Transaction Timeline</h2>
-            <p className="text-xs text-gray-500">
+            <h2 className="text-xs font-bold text-brand-text uppercase tracking-wide">
+              30-Day Transaction Volume Timeline
+            </h2>
+            <p className="text-[11px] text-brand-muted">
               Daily transaction volume highlighting recent anomalous surge on Day 28–30
             </p>
           </div>
           <div className="flex items-center gap-4 text-xs">
-            <span className="flex items-center gap-1 text-gray-600">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#96d7ba]" /> Normal Daily Volume
+            <span className="flex items-center gap-1.5 text-brand-muted">
+              <span className="w-2 h-2 rounded-full bg-emerald-500" /> Normal Daily Volume
             </span>
-            <span className="flex items-center gap-1 text-gray-600">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#dc3f4d]" /> Flagged Anomaly Surge
+            <span className="flex items-center gap-1.5 text-brand-muted">
+              <span className="w-2 h-2 rounded-full bg-rose-500" /> Flagged Anomaly Surge
             </span>
           </div>
         </div>
 
         {/* Bar Chart */}
-        <div className="bar-chart h-36 flex items-end gap-1.5 pt-4">
+        <div className="h-32 flex items-end gap-1 pt-4">
           {volumeData.map((h, i) => {
             const isFlagged = i >= 27;
             return (
@@ -242,15 +253,15 @@ export const CustomerIntelligenceView: React.FC<CustomerIntelligenceViewProps> =
                 className="flex-1 flex flex-col items-center justify-end h-full group relative cursor-pointer"
               >
                 {/* Tooltip */}
-                <div className="opacity-0 group-hover:opacity-100 absolute -top-8 bg-gray-900 text-white text-[10px] py-0.5 px-1.5 rounded pointer-events-none transition-opacity font-mono z-10 whitespace-nowrap">
+                <div className="opacity-0 group-hover:opacity-100 absolute -top-7 bg-brand-elevated border border-brand-border text-brand-text text-[9.5px] py-0.5 px-1.5 rounded pointer-events-none transition-opacity font-mono z-10 whitespace-nowrap shadow-md">
                   Day {i + 1}: ৳{(h * 500).toLocaleString()}
                 </div>
                 <div
                   style={{ height: `${h}%` }}
                   className={`w-full rounded-t-xs transition-all ${
                     isFlagged
-                      ? "bg-rose-500 hover:bg-rose-600"
-                      : "bg-[#8bd4b5] hover:bg-[#68c69f]"
+                      ? "bg-rose-500/80 hover:bg-rose-500"
+                      : "bg-emerald-500/60 hover:bg-emerald-500/80"
                   }`}
                 />
               </div>
@@ -258,11 +269,11 @@ export const CustomerIntelligenceView: React.FC<CustomerIntelligenceViewProps> =
           })}
         </div>
 
-        <div className="flex justify-between text-[10px] text-gray-400 font-mono pt-2 border-t border-gray-100">
+        <div className="flex justify-between text-[9.5px] text-brand-subtle font-mono pt-2 border-t border-brand-border">
           <span>Day 1 (30 days ago)</span>
           <span>Day 10</span>
           <span>Day 20</span>
-          <span className="text-rose-600 font-bold">Day 28–30 (Current Anomaly)</span>
+          <span className="text-rose-400 font-bold">Day 28–30 (Current Anomaly)</span>
         </div>
       </div>
     </div>

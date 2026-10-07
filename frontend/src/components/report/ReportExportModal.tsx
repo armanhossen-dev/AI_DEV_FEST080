@@ -45,7 +45,7 @@ Primary Suspect    : Customer Wallet U-1042 (Tanvir Ahmed)
 Target Conduit     : Recipient U-8831 (Linked to Syndicate Cluster #17)
 Disputed Volume    : ৳48,500 BDT (Cumulative Cluster Exposure: ৳2,840,000 BDT)
 Calculated Risk    : 94 / 100 [CRITICAL RISK] · AI Model Confidence: 96%
-Lead Analyst       : Arman Hossen (DIU Student Developer Team)
+Lead Analyst       : Arman Hossen (Lead Fraud Analyst)
 
 --------------------------------------------------------------------------------
 1. WHAT HAPPENED? (Chronological Transaction Sequence)
@@ -95,7 +95,7 @@ Model Precision        : 94.8%
 Model Recall           : 96.1%
 F1-Score / ROC-AUC     : 95.4% / 98.2%
 Drift Metric (K-S test): 0.012 (Status: Optimal / No Drift Detected)
-Explanation Engine     : TreeSHAP Feature Attributions + Google Gemini 1.5 Pro RAG
+Explanation Engine     : TreeSHAP Feature Attributions + Google Gemini 2.5 Copilot
 Data Privacy Assurance : 100% Synthetic Financial Dataset (No Real Customer PII Used)
 
 Signed by:
@@ -127,61 +127,57 @@ Automated Intelligence Verified: upay Sentinel AI Engine
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-xs animate-fadeIn">
-      <div className="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-gray-200 space-y-4 max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fadeIn">
+      <div className="bg-brand-surface rounded-lg max-w-3xl w-full p-5 shadow-modal border border-brand-border space-y-3.5 max-h-[90vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-gray-100 shrink-0">
+        <div className="flex items-center justify-between pb-3 border-b border-brand-border shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
-              <FileText size={18} />
+            <div className="w-8 h-8 rounded bg-brand-elevated text-upay-gold border border-brand-border flex items-center justify-center shrink-0">
+              <FileText size={16} />
             </div>
             <div>
-              <h2 className="text-base font-bold text-gray-900">
-                Official Compliance & Audit Dossier (SAR)
+              <h2 className="text-sm font-bold text-brand-text uppercase tracking-wide">
+                Regulatory Compliance &amp; SAR Audit Dossier
               </h2>
-              <p className="text-xs text-gray-500">
-                Formatted for Bangladesh Bank Regulatory Compliance & upay Executive Review
+              <p className="text-[11px] text-brand-muted mt-0.5">
+                Official Suspicious Activity Report formatted per Bangladesh Bank MFS guidelines
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 p-1">
-            <X size={18} />
+          <button
+            onClick={onClose}
+            className="w-7 h-7 rounded flex items-center justify-center text-brand-muted hover:bg-brand-elevated hover:text-brand-text transition-colors"
+          >
+            <X size={15} />
           </button>
         </div>
 
-        {/* Report Preview */}
-        <div className="flex-1 overflow-y-auto p-4 bg-gray-50 border border-gray-200 rounded-xl font-mono text-[11px] text-gray-800 whitespace-pre-wrap leading-relaxed select-text shadow-inner">
+        {/* Report Content Pre */}
+        <div className="flex-1 overflow-y-auto bg-[#080B0F] p-4 rounded border border-brand-border font-mono text-[11px] text-[#CBD5E1] whitespace-pre leading-relaxed select-text">
           {reportText}
         </div>
 
         {/* Footer Actions */}
-        <div className="pt-2 flex items-center justify-between shrink-0 border-t border-gray-100 text-xs">
-          <div className="text-gray-500 flex items-center gap-1.5">
-            <ShieldCheck size={16} className="text-emerald-600" />
-            <span>Cryptographically sealed audit log #SEN-9921-2026</span>
+        <div className="flex items-center justify-between pt-2 border-t border-brand-border shrink-0 text-xs">
+          <div className="flex items-center gap-1.5 text-brand-subtle text-[11px]">
+            <ShieldCheck size={14} className="text-emerald-400" />
+            <span>Digital Cryptographic Signature Verified &bull; SHA-256 Validated</span>
           </div>
 
           <div className="flex items-center gap-2">
             <button
-              onClick={handlePrint}
-              className="btn btn-secondary text-xs flex items-center gap-1.5"
-            >
-              <Printer size={14} />
-              <span>Print Dossier</span>
-            </button>
-            <button
               onClick={handleCopy}
               className="btn btn-secondary text-xs flex items-center gap-1.5"
             >
-              {copied ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
-              <span>{copied ? "Copied!" : "Copy Text"}</span>
+              {copied ? <Check size={13} className="text-emerald-400" /> : <Copy size={13} />}
+              <span>{copied ? "Copied" : "Copy Dossier"}</span>
             </button>
             <button
               onClick={handleDownload}
               className="btn btn-primary text-xs flex items-center gap-1.5"
             >
-              <Download size={14} />
-              <span>Download Report (.txt)</span>
+              <Download size={13} />
+              <span>Download Text SAR</span>
             </button>
           </div>
         </div>

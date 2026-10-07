@@ -31,6 +31,7 @@ async function callGemini(
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: AbortSignal.timeout(5000),
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: {
@@ -80,9 +81,9 @@ function extractJSON(raw: string): Record<string, unknown> | null {
 }
 
 const MODELS_IN_ORDER = [
-  "gemini-flash-latest",
   "gemini-2.5-flash",
-  "gemini-3.8-flash",
+  "gemini-2.0-flash",
+  "gemini-1.5-flash",
 ];
 
 export async function generateInvestigationAnalysis(

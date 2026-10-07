@@ -11,6 +11,8 @@ import {
   RotateCcw,
   CheckCircle2,
   Sparkles,
+  Smartphone,
+  Share2,
 } from "lucide-react";
 
 interface SimulationModalProps {
@@ -116,7 +118,7 @@ export const SimulationModal: React.FC<SimulationModalProps> = ({
       isNewLocation: false,
       time: customTime,
       flags: [
-        isNewDevice ? `New device ${customDevice} detected` : "Known device verified",
+        isNewDevice ? `New hardware ${customDevice} detected` : "Known device verified",
         Number(customAmount) > 25000 ? "High value transaction" : "Normal value",
       ],
     });
@@ -124,50 +126,50 @@ export const SimulationModal: React.FC<SimulationModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-xs animate-fadeIn">
-      <div className="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-gray-200 space-y-5">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fadeIn">
+      <div className="bg-brand-surface rounded-lg max-w-2xl w-full p-5 shadow-modal border border-brand-border space-y-4">
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+        <div className="flex items-center justify-between pb-3 border-b border-brand-border">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#0e9f67] to-[#087c50] text-white flex items-center justify-center shadow-xs">
-              <Zap size={18} />
+            <div className="w-8 h-8 rounded bg-brand-elevated text-upay-gold flex items-center justify-center border border-brand-border">
+              <Zap size={16} />
             </div>
             <div>
-              <h2 className="text-base font-bold text-gray-900">
-                Live Attack & Anomaly Simulator
+              <h2 className="text-sm font-bold text-brand-text uppercase tracking-wide">
+                Risk Scenario Testing Laboratory
               </h2>
-              <p className="text-xs text-gray-500">
-                Inject synthetic fraud vectors to demonstrate real-time AI scoring, graph matching & triage
+              <p className="text-[11px] text-brand-muted mt-0.5">
+                Inject verified synthetic fraud vectors to test deterministic rules, neural scoring, and graph clustering.
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 p-1"
+            className="w-7 h-7 rounded flex items-center justify-center text-brand-muted hover:bg-brand-elevated hover:text-brand-text transition-colors"
           >
-            <X size={18} />
+            <X size={15} />
           </button>
         </div>
 
         {/* 4 Pre-built Quick Attack Scenarios */}
         <div>
-          <h3 className="text-xs font-bold text-gray-900 uppercase tracking-wider mb-2">
-            1-Click Scenario Injectors
+          <h3 className="text-[10px] font-bold text-brand-subtle uppercase tracking-wider font-mono mb-2">
+            STANDARDIZED TEST SCENARIOS
           </h3>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {/* Scenario 1: Coordinated Mule Syndicate */}
             <div
               onClick={() => handleScenario("mule")}
-              className="p-3.5 rounded-xl border border-rose-200 bg-rose-50/60 hover:bg-rose-50 cursor-pointer transition-all space-y-1.5 group"
+              className="p-3 rounded border border-brand-border bg-brand-elevated hover:border-risk-critical/40 cursor-pointer transition-all space-y-1 group"
             >
               <div className="flex items-center justify-between">
                 <span className="badge badge-critical text-[9px]">CRITICAL SYNDICATE</span>
-                <Play size={13} className="text-rose-600 group-hover:translate-x-0.5 transition-transform" />
+                <Play size={12} className="text-rose-400 group-hover:translate-x-0.5 transition-transform" />
               </div>
-              <b className="text-xs font-bold text-gray-900 block">
+              <b className="text-xs font-bold text-brand-text block mt-1">
                 Mule Network Surge (Cluster #17)
               </b>
-              <p className="text-[11px] text-gray-600 leading-tight">
+              <p className="text-[11px] text-brand-muted leading-snug">
                 ৳48,500 transfer to U-8831 with unverified device DEV-8821 at 02:13 AM.
               </p>
             </div>
@@ -175,16 +177,16 @@ export const SimulationModal: React.FC<SimulationModalProps> = ({
             {/* Scenario 2: Account Takeover */}
             <div
               onClick={() => handleScenario("ato")}
-              className="p-3.5 rounded-xl border border-amber-200 bg-amber-50/60 hover:bg-amber-50 cursor-pointer transition-all space-y-1.5 group"
+              className="p-3 rounded border border-brand-border bg-brand-elevated hover:border-risk-critical/40 cursor-pointer transition-all space-y-1 group"
             >
               <div className="flex items-center justify-between">
                 <span className="badge badge-high text-[9px]">HIGH RISK ATO</span>
-                <Play size={13} className="text-amber-600 group-hover:translate-x-0.5 transition-transform" />
+                <Play size={12} className="text-orange-400 group-hover:translate-x-0.5 transition-transform" />
               </div>
-              <b className="text-xs font-bold text-gray-900 block">
-                Account Takeover & Cash-out
+              <b className="text-xs font-bold text-brand-text block mt-1">
+                Account Takeover &amp; Cash-Out
               </b>
-              <p className="text-[11px] text-gray-600 leading-tight">
+              <p className="text-[11px] text-brand-muted leading-snug">
                 USSD reset followed by instant ৳32,000 cash-out in Chattogram.
               </p>
             </div>
@@ -192,16 +194,16 @@ export const SimulationModal: React.FC<SimulationModalProps> = ({
             {/* Scenario 3: Micro-structuring Velocity */}
             <div
               onClick={() => handleScenario("velocity")}
-              className="p-3.5 rounded-xl border border-yellow-200 bg-yellow-50/60 hover:bg-yellow-50 cursor-pointer transition-all space-y-1.5 group"
+              className="p-3 rounded border border-brand-border bg-brand-elevated hover:border-risk-medium/40 cursor-pointer transition-all space-y-1 group"
             >
               <div className="flex items-center justify-between">
                 <span className="badge badge-medium text-[9px]">BURST VELOCITY</span>
-                <Play size={13} className="text-yellow-700 group-hover:translate-x-0.5 transition-transform" />
+                <Play size={12} className="text-amber-400 group-hover:translate-x-0.5 transition-transform" />
               </div>
-              <b className="text-xs font-bold text-gray-900 block">
-                Rapid Layering Velocity Burst
+              <b className="text-xs font-bold text-brand-text block mt-1">
+                Structuring &amp; Smurfing Burst
               </b>
-              <p className="text-[11px] text-gray-600 leading-tight">
+              <p className="text-[11px] text-brand-muted leading-snug">
                 6 back-to-back fund transfers under threshold within 180 seconds.
               </p>
             </div>
@@ -209,16 +211,16 @@ export const SimulationModal: React.FC<SimulationModalProps> = ({
             {/* Scenario 4: Legitimate Baseline */}
             <div
               onClick={() => handleScenario("normal")}
-              className="p-3.5 rounded-xl border border-emerald-200 bg-emerald-50/60 hover:bg-emerald-50 cursor-pointer transition-all space-y-1.5 group"
+              className="p-3 rounded border border-brand-border bg-brand-elevated hover:border-risk-low/40 cursor-pointer transition-all space-y-1 group"
             >
               <div className="flex items-center justify-between">
                 <span className="badge badge-low text-[9px]">SAFE BASELINE</span>
-                <Play size={13} className="text-emerald-600 group-hover:translate-x-0.5 transition-transform" />
+                <Play size={12} className="text-emerald-400 group-hover:translate-x-0.5 transition-transform" />
               </div>
-              <b className="text-xs font-bold text-gray-900 block">
+              <b className="text-xs font-bold text-brand-text block mt-1">
                 Legitimate Merchant Grocery Pay
               </b>
-              <p className="text-[11px] text-gray-600 leading-tight">
+              <p className="text-[11px] text-brand-muted leading-snug">
                 ৳2,450 to verified supermarket M-291 at 02:30 PM on known device.
               </p>
             </div>
@@ -226,28 +228,28 @@ export const SimulationModal: React.FC<SimulationModalProps> = ({
         </div>
 
         {/* Custom Transaction Form */}
-        <form onSubmit={handleCustomSubmit} className="pt-3 border-t border-gray-100 space-y-3">
-          <h3 className="text-xs font-bold text-gray-900 uppercase tracking-wider">
-            Custom Parameter Injection
+        <form onSubmit={handleCustomSubmit} className="pt-3 border-t border-brand-border space-y-2.5">
+          <h3 className="text-[10px] font-bold text-brand-subtle uppercase tracking-wider font-mono">
+            CUSTOM TRANSACTION PARAMETER INJECTION
           </h3>
 
-          <div className="grid grid-cols-3 gap-3 text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
             <div>
-              <label className="text-gray-500 font-medium block mb-1">Amount (BDT ৳)</label>
+              <label className="text-brand-muted font-medium block mb-1 text-[11px]">Amount (BDT ৳)</label>
               <input
                 type="number"
                 value={customAmount}
                 onChange={(e) => setCustomAmount(Number(e.target.value))}
-                className="w-full h-8 px-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none font-mono"
+                className="w-full h-8 px-2 bg-brand-elevated border border-brand-border rounded outline-none font-mono text-brand-text focus:border-upay-gold"
               />
             </div>
 
             <div>
-              <label className="text-gray-500 font-medium block mb-1">Transaction Type</label>
+              <label className="text-brand-muted font-medium block mb-1 text-[11px]">Channel / Type</label>
               <select
                 value={customType}
                 onChange={(e) => setCustomType(e.target.value as TransactionType)}
-                className="w-full h-8 px-2 bg-gray-50 border border-gray-200 rounded-lg outline-none"
+                className="w-full h-8 px-2 bg-brand-elevated border border-brand-border rounded outline-none text-brand-text"
               >
                 <option value="Wallet Transfer">Wallet Transfer</option>
                 <option value="Cash Out">Cash Out</option>
@@ -257,33 +259,33 @@ export const SimulationModal: React.FC<SimulationModalProps> = ({
             </div>
 
             <div>
-              <label className="text-gray-500 font-medium block mb-1">Execution Time</label>
+              <label className="text-brand-muted font-medium block mb-1 text-[11px]">Execution Time</label>
               <input
                 type="text"
                 value={customTime}
                 onChange={(e) => setCustomTime(e.target.value)}
                 placeholder="e.g. 02:45 AM"
-                className="w-full h-8 px-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none font-mono"
+                className="w-full h-8 px-2 bg-brand-elevated border border-brand-border rounded outline-none font-mono text-brand-text"
               />
             </div>
 
             <div>
-              <label className="text-gray-500 font-medium block mb-1">Target Recipient</label>
+              <label className="text-brand-muted font-medium block mb-1 text-[11px]">Target Recipient</label>
               <input
                 type="text"
                 value={customRecipient}
                 onChange={(e) => setCustomRecipient(e.target.value)}
-                className="w-full h-8 px-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none font-mono"
+                className="w-full h-8 px-2 bg-brand-elevated border border-brand-border rounded outline-none font-mono text-brand-text"
               />
             </div>
 
             <div>
-              <label className="text-gray-500 font-medium block mb-1">Device ID</label>
+              <label className="text-brand-muted font-medium block mb-1 text-[11px]">Hardware Device</label>
               <input
                 type="text"
                 value={customDevice}
                 onChange={(e) => setCustomDevice(e.target.value)}
-                className="w-full h-8 px-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none font-mono"
+                className="w-full h-8 px-2 bg-brand-elevated border border-brand-border rounded outline-none font-mono text-brand-text"
               />
             </div>
 
@@ -293,21 +295,21 @@ export const SimulationModal: React.FC<SimulationModalProps> = ({
                 id="isNew"
                 checked={isNewDevice}
                 onChange={(e) => setIsNewDevice(e.target.checked)}
-                className="w-4 h-4 text-emerald-600 rounded"
+                className="w-3.5 h-3.5 rounded border-brand-border bg-brand-elevated text-upay-gold focus:ring-0"
               />
-              <label htmlFor="isNew" className="text-xs text-gray-700 cursor-pointer">
-                New/Unrecognized Device
+              <label htmlFor="isNew" className="text-xs text-brand-muted cursor-pointer select-none">
+                New/Unpaired Hardware
               </label>
             </div>
           </div>
 
-          <div className="pt-2 flex justify-end gap-2">
+          <div className="pt-2 flex justify-end gap-2 border-t border-brand-border">
             <button type="button" onClick={onClose} className="btn btn-secondary text-xs">
               Cancel
             </button>
             <button type="submit" className="btn btn-primary text-xs flex items-center gap-1.5">
-              <Zap size={14} />
-              <span>Score & Inject Live</span>
+              <Zap size={13} />
+              <span>Score &amp; Inject into Pipeline</span>
             </button>
           </div>
         </form>

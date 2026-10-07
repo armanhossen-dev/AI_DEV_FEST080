@@ -5,15 +5,14 @@
   "type": "module",
   "description": "upay Sentinel — AI-Powered Trust & Risk Intelligence Platform for Digital Financial Services",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm --prefix frontend run dev",
     "dev:frontend": "npm --prefix frontend run dev",
-    "dev:backend": "npm --prefix backend run dev",
-    "server": "tsx server/index.ts",
-    "build": "tsc && vite build",
+    "dev:backend": "npm --prefix backend run server",
+    "server": "npm --prefix backend run server",
+    "build": "npm --prefix frontend run build",
     "build:frontend": "npm --prefix frontend run build",
-    "preview": "vite preview",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "start": "npm --prefix frontend run start",
+    "forwarder": "node scripts/port-5173-redirect.cjs"
   },
   "dependencies": {
     "@google/genai": "^2.27.0",

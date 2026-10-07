@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { InvestigationCase, NavigationPage, Transaction } from "@/types";
 import { evidenceTimelineINV1042 } from "@/lib/data";
 import { SentinelAssistant } from "./SentinelAssistant";
+import { useSentinel } from "@/context/SentinelContext";
 import {
   ChevronRight,
   ShieldAlert,
@@ -18,6 +19,10 @@ import {
   CheckCircle2,
   ArrowRight,
   FileCheck,
+  History,
+  Lock,
+  PauseCircle,
+  KeyRound,
 } from "lucide-react";
 
 interface InvestigationDetailViewProps {
@@ -31,212 +36,326 @@ export const InvestigationDetailView: React.FC<InvestigationDetailViewProps> = (
   onNavigate,
   onNotify,
 }) => {
-  const [activeTab, setActiveTab] = useState<string>("overview");
+  const { executeAnalystAction, auditEvents } = useSentinel();
+  const [activeTab, setActiveTab] = useState<"overview" | "timeline" | "audit">("overview");
 
-  const caseId = caseData?.id || "INV-1042";
-  const customer = caseData?.customer || "U-1042";
-  const riskScore = caseData?.riskScore || 94;
-  const exposure = caseData?.exposure || 184000;
+  const activeCase = caseData || {
+    id: "INV-1042",
+    riskLevel: "Critical",
+    customer: "U-1042",
+    amount: 48500,
+    reason: "Mule network & Account Takeover",
+    analyst: "Arman Hossen",
+    status: "Investigating",
+    updated: "2 min ago",
+    createdTime: "Today at 02:18 AM",
+    exposure: 184000,
+    transactionsCount: 27,
+    networkConnections: 12,
+    riskScore: 94,
+    summary:
+      "Customer U-1042 performed an unusually large transfer of ৳48,500 from a newly registered device DEV-8821 at 02:13 AM. The recipient U-8831 is connected to previously flagged transaction cluster #17.",
+    recommendation:
+      "Freeze pending outgoing transfers to U-8831, initiate immediate biometric/OTP step-up verification on U-1042 primary device.",
+    confidence: 96,
+  };
+
+  const caseId = activeCase.id;
+  const customer = activeCase.customer;
+  const riskScore = activeCase.riskScore;
+  const exposure = activeCase.exposure || activeCase.amount * 1.5;
+
+  // Filter audit events relevant to this case
+  const caseAuditEvents = auditEvents.filter(
+    (e) => e.relatedId === caseId || e.relatedId?.includes(customer) || e.details.includes(customer)
+  );
+
+  const handleAction = (
+    action: "HOLD" | "STEP_UP" | "RELEASE" | "ESCALATE" | "MARK_SAFE",
+    label: string
+  ) => {
+    executeAnalystAction(caseId, action);
+    onNotify(`Action executed: ${label}. Immutable audit record logged.`);
+  };
 
   return (
-    <div className="space-y-4 pb-20 animate-fadeIn">
-      {/* Breadcrumb */}
+    <div className="space-y-4 pb-24 animate-fadeIn">
+      {/* Breadcrumb Navigation */}
       <div className="case-breadcrumb">
-        <span onClick={() => onNavigate("investigations")}>Investigations</span>
-        <ChevronRight size={13} />
-        <b>{caseId}</b>
+        <span onClick={() => onNavigate("investigations")} className="cursor-pointer hover:underline text-brand-muted hover:text-brand-text">
+          Investigations
+        </span>
+        <ChevronRight size={12} className="text-brand-subtle" />
+        <b className="text-brand-text font-mono">{caseId}</b>
       </div>
 
       {/* Case Header */}
       <div className="page-header">
         <div>
-          <div className="eyebrow">CASE DOSSIER</div>
-          <h1 className="page-title">Investigation {caseId}</h1>
-          <p className="page-subtitle">
-            Created today at 02:18 AM · Last updated 2 minutes ago by Arman Hossen
+          <div className="eyebrow flex items-center gap-1.5 text-brand-subtle">
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+            CASE DOSSIER &bull; AUDIT VERIFIED
+          </div>
+          <h1 className="page-title text-brand-text">Investigation {caseId}</h1>
+          <p className="page-subtitle text-brand-muted">
+            Opened {activeCase.createdTime} &middot; Last updated {activeCase.updated} by {activeCase.analyst}
           </p>
         </div>
-        <div className="flex items-center gap-2.5">
-          <span className="badge badge-critical text-xs px-2.5 py-1">CRITICAL</span>
+        <div className="flex items-center gap-2">
+          <span
+            className={`badge text-xs px-2.5 py-0.5 ${
+              activeCase.riskLevel === "Critical"
+                ? "badge-critical"
+                : activeCase.riskLevel === "High"
+                ? "badge-high"
+                : "badge-medium"
+            }`}
+          >
+            {activeCase.riskLevel.toUpperCase()} PRIORITY
+          </span>
           <span className="case-status text-xs">
-            <i />
-            <span>Under Active Investigation</span>
+            <i className={activeCase.status === "Resolved" ? "bg-emerald-400" : "bg-amber-400"} />
+            <span className="font-mono text-xs">Status: {activeCase.status}</span>
           </span>
         </div>
       </div>
 
       {/* Top 5-Item KPI Exposure Grid */}
-      <div className="card-base case-summary">
+      <div className="card-base case-summary border border-brand-border">
         <div>
           <div className="summary-icon">
-            <Users size={18} />
+            <Users size={16} />
           </div>
           <span>Customer Wallet</span>
           <b
             onClick={() => onNavigate("customers")}
-            className="text-emerald-800 hover:underline cursor-pointer"
+            className="text-sky-400 hover:underline cursor-pointer font-mono text-sm"
           >
             {customer}
           </b>
         </div>
 
         <div>
-          <div className="summary-icon si1">
-            <ShieldAlert size={18} />
+          <div className="summary-icon text-rose-500">
+            <ShieldAlert size={16} />
           </div>
-          <span>Risk Score</span>
-          <b className="text-rose-600">{riskScore} / 100</b>
+          <span>Calculated Risk</span>
+          <b className="text-rose-400 font-mono text-sm">{riskScore} / 100</b>
         </div>
 
         <div>
-          <div className="summary-icon">
-            <Activity size={18} />
+          <div className="summary-icon text-amber-500">
+            <Activity size={16} />
           </div>
-          <span>Transactions</span>
-          <b className="text-ink">27</b>
+          <span>Transaction Count</span>
+          <b className="text-brand-text font-mono text-sm">{activeCase.transactionsCount} Txns</b>
         </div>
 
         <div>
-          <div className="summary-icon">
-            <Share2 size={18} />
+          <div className="summary-icon text-sky-400">
+            <Share2 size={16} />
           </div>
-          <span>Network Connections</span>
+          <span>Syndicate Ties</span>
           <b
             onClick={() => onNavigate("network")}
-            className="text-emerald-800 hover:underline cursor-pointer"
+            className="text-sky-400 hover:underline cursor-pointer font-mono text-sm"
           >
-            12 Entities
+            {activeCase.networkConnections} Nodes
           </b>
         </div>
 
         <div>
-          <div className="summary-icon">
-            <DollarSign size={18} />
+          <div className="summary-icon text-emerald-400">
+            <DollarSign size={16} />
           </div>
-          <span>Potential Exposure</span>
-          <b className="text-ink">৳{exposure.toLocaleString()}</b>
+          <span>Capital Exposure</span>
+          <b className="text-brand-text font-mono text-sm">৳{exposure.toLocaleString()}</b>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="tabs case-tabs">
-        {[
-          { id: "overview", label: "Overview & Evidence" },
-          { id: "transactions", label: "Linked Transactions (27)" },
-          { id: "network", label: "Cluster Graph" },
-          { id: "audit", label: "Audit Log & SAR" },
-        ].map((tab) => (
-          <div
-            key={tab.id}
-            onClick={() => {
-              if (tab.id === "network") onNavigate("network");
-              else if (tab.id === "transactions") onNavigate("transactions");
-              else setActiveTab(tab.id);
-            }}
-            className={activeTab === tab.id ? "active" : ""}
-          >
-            {tab.label}
-          </div>
-        ))}
+      {/* Tab Selector */}
+      <div className="flex items-center gap-1 border-b border-brand-border pb-1">
+        <button
+          onClick={() => setActiveTab("overview")}
+          className={`px-3 py-1.5 rounded text-xs font-semibold transition-all ${
+            activeTab === "overview"
+              ? "bg-brand-elevated text-brand-text border border-brand-border"
+              : "text-brand-muted hover:text-brand-text"
+          }`}
+        >
+          Evidence Overview
+        </button>
+        <button
+          onClick={() => setActiveTab("timeline")}
+          className={`px-3 py-1.5 rounded text-xs font-semibold transition-all ${
+            activeTab === "timeline"
+              ? "bg-brand-elevated text-brand-text border border-brand-border"
+              : "text-brand-muted hover:text-brand-text"
+          }`}
+        >
+          Incident Telemetry Timeline
+        </button>
+        <button
+          onClick={() => setActiveTab("audit")}
+          className={`px-3 py-1.5 rounded text-xs font-semibold transition-all flex items-center gap-1.5 ${
+            activeTab === "audit"
+              ? "bg-brand-elevated text-brand-text border border-brand-border"
+              : "text-brand-muted hover:text-brand-text"
+          }`}
+        >
+          <History size={12} />
+          <span>Audit Trail ({caseAuditEvents.length})</span>
+        </button>
       </div>
 
-      {/* Main Workspace Layout (Left: Evidence & Timeline, Right: Sentinel AI Assistant) */}
-      <div className="grid grid-cols-12 gap-4">
-        {/* Left Column (Evidence and Timeline) */}
-        <div className="col-span-7 space-y-4">
-          {/* AI Investigation Summary Card */}
-          <div className="card-base case-overview p-5">
-            <div className="flex items-center justify-between pb-3 border-b border-line">
-              <h2 className="text-sm font-bold text-ink">
-                AI Automated Investigation Summary
-              </h2>
-              <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">
-                <Sparkles size={11} /> AI GENERATED
-              </span>
-            </div>
-
-            <p className="text-xs text-ink leading-relaxed mt-3">
-              Customer <b>{customer}</b> performed an unusually large transfer of{" "}
-              <b>৳48,500</b> from newly registered device <b>DEV-8821</b> at 02:13 AM.
-              The recipient <b>U-8831</b> is topologically connected to previously flagged
-              transaction <b>Cluster #17</b>. Multi-vector behavioral and network signals indicate
-              high probability of account takeover and illicit money-mule layering.
-            </p>
-
-            <div className="summary-sources mt-3 pt-3 border-t border-line">
-              <span>Grounded in telemetry:</span>
-              <b>27 historical transactions</b>
-              <b>3 distinct devices</b>
-              <b>12 graph relationships</b>
-            </div>
-          </div>
-
-          {/* Chronological Evidence Timeline Card */}
-          <div className="card-base timeline-card p-5">
-            <div className="flex items-center justify-between pb-3 border-b border-line">
-              <div>
-                <h2 className="text-sm font-bold text-ink">Evidence Timeline</h2>
-                <p className="text-xs text-subtle">
-                  Chronological progression of risk markers
-                </p>
-              </div>
-              <span className="text-[11px] font-mono text-subtle">
-                UTC+6 / Dhaka Time
-              </span>
-            </div>
-
-            <div className="evidence-timeline mt-4 space-y-2">
-              {evidenceTimelineINV1042.map((ev, i) => (
-                <div
-                  key={i}
-                  className={`flex items-start gap-3 p-2 rounded-lg ${
-                    ev.isCritical ? "bg-rose-50/70 border border-rose-100" : ""
-                  }`}
-                >
-                  <span className="text-[11px] text-subtle font-mono w-16 shrink-0 pt-0.5">
-                    {ev.time}
-                  </span>
-                  <div
-                    className={`w-2.5 h-2.5 rounded-full mt-1 shrink-0 ${
-                      ev.isCritical ? "bg-rose-600 ring-2 ring-rose-200" : "bg-emerald-500"
-                    }`}
-                  />
-                  <div className="text-xs flex-1">
-                    <b className={ev.isCritical ? "text-rose-900" : "text-ink"}>
-                      {ev.title}
-                    </b>
-                    <p className="text-muted mt-0.5">{ev.description}</p>
-                  </div>
+      {/* Main 2-Column Workstation Workspace */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5">
+        {/* Left Column: Dossier Details / Timeline / Audit Tab */}
+        <div className="lg:col-span-7 space-y-3.5">
+          {activeTab === "overview" && (
+            <>
+              {/* Executive Summary Card */}
+              <div className="card-base p-4 space-y-2 border border-brand-border">
+                <div className="flex items-center justify-between pb-2 border-b border-brand-border">
+                  <div className="eyebrow text-brand-subtle">EXECUTIVE INCIDENT SUMMARY</div>
+                  <span className="text-[11px] text-brand-subtle font-mono">Reason: {activeCase.reason}</span>
                 </div>
-              ))}
-            </div>
-          </div>
+                <p className="text-xs text-brand-text leading-relaxed">{activeCase.summary}</p>
+              </div>
 
-          {/* AI Recommendation Banner */}
-          <div className="card-base ai-recommend p-4 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
-                <Sparkles size={18} />
+              {/* Multi-Signal Breakdown Card */}
+              <div className="card-base p-4 space-y-2.5 border border-brand-border">
+                <div className="eyebrow text-brand-subtle pb-2 border-b border-brand-border">
+                  STRUCTURED RISK EVIDENCE SIGNALS
+                </div>
+                <div className="space-y-2">
+                  {[
+                    {
+                      signal: "Transaction Amount Velocity Spike",
+                      desc: "Amount is 4.8× above customer 30-day baseline median of ৳6,800.",
+                      score: 92,
+                    },
+                    {
+                      signal: "Hardware Fingerprint Mismatch",
+                      desc: "Device DEV-8821 first observed 12 minutes prior to transfer with zero wallet pairing history.",
+                      score: 78,
+                    },
+                    {
+                      signal: "Topological Mule Cluster Proximity",
+                      desc: "Beneficiary wallet U-8831 is an intermediary conduit linked to Mule Syndicate Cluster #17.",
+                      score: 91,
+                    },
+                    {
+                      signal: "Nocturnal Dormant Hours Execution",
+                      desc: "Executed at 02:13 AM. User has zero historic transactions between 11:30 PM and 7:00 AM.",
+                      score: 74,
+                    },
+                  ].map((s, idx) => (
+                    <div
+                      key={idx}
+                      className="p-2.5 rounded border border-brand-border bg-brand-elevated flex items-start justify-between gap-3"
+                    >
+                      <div>
+                        <b className="text-xs text-brand-text block">{s.signal}</b>
+                        <p className="text-[11px] text-brand-muted mt-0.5 leading-snug">{s.desc}</p>
+                      </div>
+                      <span className="badge badge-critical text-[9.5px] shrink-0 font-mono">
+                        {s.score}/100
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
+          {activeTab === "timeline" && (
+            <div className="card-base p-4 border border-brand-border">
+              <div className="eyebrow text-brand-subtle pb-2.5 border-b border-brand-border">
+                CHRONOLOGICAL INCIDENT TELEMETRY
+              </div>
+              <div className="space-y-3 mt-3">
+                {evidenceTimelineINV1042.map((ev, i) => (
+                  <div key={i} className="flex items-start gap-2.5 relative pb-2">
+                    <span className="text-[10px] text-brand-subtle font-mono w-14 shrink-0 pt-0.5">
+                      {ev.time}
+                    </span>
+                    <span
+                      className={`w-2 h-2 rounded-full mt-1 shrink-0 ${
+                        ev.isCritical ? "bg-rose-500" : "bg-emerald-500"
+                      }`}
+                    />
+                    <div className="text-xs flex-1">
+                      <b className={ev.isCritical ? "text-rose-400 font-semibold" : "text-brand-text"}>
+                        {ev.title}
+                      </b>
+                      <p className="text-brand-muted text-[11px] mt-0.5">{ev.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {activeTab === "audit" && (
+            <div className="card-base p-4 space-y-2.5 border border-brand-border">
+              <div className="flex items-center justify-between pb-2 border-b border-brand-border">
+                <div>
+                  <div className="eyebrow text-brand-subtle">IMMUTABLE SESSION AUDIT TRAIL</div>
+                  <h3 className="text-xs font-bold text-brand-text uppercase tracking-wide">Human Decision &amp; Action Log</h3>
+                </div>
+                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                  Tamper-Evident Session Log
+                </span>
+              </div>
+
+              {caseAuditEvents.length === 0 ? (
+                <p className="text-xs text-brand-subtle py-8 text-center">
+                  No analyst interventions recorded yet for this case. Use the action bar below to log verified decisions.
+                </p>
+              ) : (
+                <div className="divide-y divide-brand-border">
+                  {caseAuditEvents.map((event) => (
+                    <div key={event.id} className="py-2 space-y-0.5">
+                      <div className="flex items-center justify-between text-[11px]">
+                        <span className="font-bold text-brand-text font-mono">{event.actor}</span>
+                        <span className="text-brand-subtle font-mono text-[9.5px]">{event.timestamp}</span>
+                      </div>
+                      <p className="text-xs text-brand-muted leading-snug">{event.details}</p>
+                      <span className="text-[9.5px] font-mono text-brand-subtle block">
+                        ID: {event.id} &middot; Type: {event.eventType}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* AI Recommended Intervention Banner */}
+          <div className="card-base p-3.5 flex items-center justify-between gap-3 border border-brand-border bg-brand-elevated">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded bg-brand-surface text-upay-gold border border-brand-border flex items-center justify-center shrink-0">
+                <Sparkles size={16} />
               </div>
               <div>
-                <div className="eyebrow text-emerald-800">RECOMMENDED INTERVENTION</div>
-                <h4 className="text-xs font-bold text-ink">
-                  Manual Verification & Recipient Settlement Hold
+                <div className="eyebrow text-upay-gold text-[9.5px]">RECOMMENDED INTERVENTION</div>
+                <h4 className="text-xs font-bold text-brand-text">
+                  Settlement Quarantine &amp; Biometric Challenge
                 </h4>
-                <p className="text-xs text-muted">
-                  Verify customer identity via outbound biometric challenge and freeze recipient
-                  wallet U-8831.
+                <p className="text-[11px] text-brand-muted mt-0.5">
+                  {activeCase.recommendation}
                 </p>
               </div>
             </div>
-            <span className="confidence-pill text-xs font-bold shrink-0">
-              93% Confidence
+            <span className="px-2 py-0.5 rounded bg-brand-surface text-brand-text text-[10px] font-bold font-mono shrink-0 border border-brand-border">
+              {activeCase.confidence}% Confidence
             </span>
           </div>
         </div>
 
-        {/* Right Column: Sentinel AI Investigation Assistant */}
-        <div className="col-span-5">
+        {/* Right Column: Sentinel Copilot Assistant */}
+        <div className="lg:col-span-5">
           <SentinelAssistant
             caseId={caseId}
             customer={customer}
@@ -245,40 +364,48 @@ export const InvestigationDetailView: React.FC<InvestigationDetailViewProps> = (
         </div>
       </div>
 
-      {/* Persistent Bottom Action Bar */}
-      <div className="action-bar select-none">
-        <div className="flex items-center gap-2 text-xs text-muted">
-          <ShieldAlert size={16} className="text-amber-600" />
+      {/* Persistent Bottom Action Bar with Human Oversight Safeguards */}
+      <div className="action-bar select-none fixed bottom-0 left-0 right-0 z-40 bg-brand-surface/95 backdrop-blur-md border-t border-brand-border px-5 py-2.5 flex items-center justify-between">
+        <div className="flex items-center gap-2 text-xs text-brand-muted">
+          <ShieldAlert size={15} className="text-upay-gold shrink-0" />
           <span>
-            <b>Human Oversight Required:</b> High-impact account sanctions require analyst confirmation.
+            <b className="text-brand-text">Human-in-the-Loop Safeguard:</b> High-impact account sanctions require verified analyst confirmation.
           </span>
         </div>
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => onNotify("Case marked as False Positive. Ingested into negative training set.")}
+            onClick={() => handleAction("MARK_SAFE", "Case dismissed as benign / false positive")}
             className="btn btn-secondary text-xs"
           >
             Mark False Positive
           </button>
           <button
-            onClick={() => onNotify("Biometric step-up challenge sent to customer U-1042 registered phone.")}
-            className="btn btn-secondary text-xs"
+            onClick={() => handleAction("STEP_UP", "Biometric step-up challenge dispatched to customer")}
+            className="btn btn-secondary text-xs flex items-center gap-1"
           >
-            Request Verification
+            <KeyRound size={12} />
+            <span>Request Biometric 2FA</span>
           </button>
           <button
-            onClick={() => onNotify("Case escalated to Senior Risk Committee & Legal.")}
-            className="btn btn-danger text-xs flex items-center gap-1.5"
+            onClick={() => handleAction("HOLD", "Outgoing settlement hold placed on recipient")}
+            className="btn text-xs bg-amber-500/15 text-amber-400 border border-amber-500/30 hover:bg-amber-500/25 flex items-center gap-1"
           >
-            <AlertTriangle size={14} />
+            <PauseCircle size={13} />
+            <span>Hold Settlement</span>
+          </button>
+          <button
+            onClick={() => handleAction("ESCALATE", "Escalated to AML & Regulatory Committee")}
+            className="btn btn-danger text-xs flex items-center gap-1"
+          >
+            <AlertTriangle size={13} />
             <span>Escalate Case</span>
           </button>
           <button
-            onClick={() => onNotify(`Investigation ${caseId} marked as RESOLVED. Audit report logged.`)}
-            className="btn btn-primary text-xs flex items-center gap-1.5"
+            onClick={() => handleAction("RELEASE", "Case finalized and resolved")}
+            className="btn btn-primary text-xs flex items-center gap-1"
           >
-            <CheckCircle2 size={14} />
+            <CheckCircle2 size={13} />
             <span>Close Case</span>
           </button>
         </div>
