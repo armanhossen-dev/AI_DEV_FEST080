@@ -19,6 +19,8 @@ import {
   Cpu,
   Database,
   SlidersHorizontal,
+  Lock,
+  History,
 } from "lucide-react";
 import { UserProfile } from "../auth/LoginPage";
 import { useSentinel } from "@/context/SentinelContext";
@@ -78,6 +80,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         { id: "risk", labelEn: "Risk Intelligence", labelBn: "ঝুঁকি গোয়েন্দা তথ্য", icon: <ShieldAlert size={15} /> },
         { id: "network", labelEn: "Fraud Ring Graph", labelBn: "জালিয়াতি নেটওয়ার্ক", icon: <Share2 size={15} /> },
         { id: "alerts", labelEn: "Alert Center", labelBn: "সতর্কবার্তা কেন্দ্র", icon: <Bell size={15} /> },
+        { id: "security", labelEn: "Security Intelligence", labelBn: "নিরাপত্তা গোয়েন্দা", icon: <Lock size={15} /> },
       ],
     },
     {
@@ -85,6 +88,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       items: [
         { id: "investigations", labelEn: "Investigation Cases", labelBn: "তদন্ত ও মামলা", icon: <Briefcase size={15} /> },
         { id: "customers", labelEn: "Customer Risk Profile", labelBn: "গ্রাহক ঝুঁকি প্রোফাইল", icon: <Users size={15} /> },
+        { id: "audit", labelEn: "Immutable Audit Trail", labelBn: "অডিট ট্রেইল", icon: <History size={15} /> },
       ],
     },
     {

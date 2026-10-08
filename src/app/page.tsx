@@ -27,6 +27,8 @@ import { CustomerPortalView } from "@/components/customer/CustomerPortalView";
 import { ModelManagementView } from "@/components/admin/ModelManagementView";
 import { DatasetManagementView } from "@/components/admin/DatasetManagementView";
 import { SystemHealthView } from "@/components/admin/SystemHealthView";
+import { SecurityIntelligenceView } from "@/components/security/SecurityIntelligenceView";
+import { ImmutableAuditView } from "@/components/audit/ImmutableAuditView";
 
 function SentinelAppShell() {
   const {
@@ -347,6 +349,12 @@ function SentinelAppShell() {
               currentUser={currentUser}
               onNavigateAdmin={() => handleNavigate("overview")}
               onLogout={handleLogout}
+            />
+          )}
+
+          {currentPage === "security" && (
+            <SecurityIntelligenceView
+              onNavigate={handleNavigate}
               onNotify={showNotification}
             />
           )}
@@ -361,6 +369,13 @@ function SentinelAppShell() {
 
           {currentPage === "system-health" && (
             <SystemHealthView />
+          )}
+
+          {currentPage === "audit" && (
+            <ImmutableAuditView
+              onNavigate={handleNavigate}
+              onNotify={showNotification}
+            />
           )}
         </main>
       </div>

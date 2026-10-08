@@ -14,15 +14,13 @@ import {
   ShieldAlert,
   SlidersHorizontal,
 } from "lucide-react";
+import { auth, googleProvider, githubProvider } from "@/lib/firebase";
 import {
-  auth,
-  googleProvider,
-  githubProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
-} from "@/lib/firebase";
+} from "firebase/auth";
 import { syncFirebaseUserToSupabase } from "@/lib/supabase";
 
 export interface UserProfile {

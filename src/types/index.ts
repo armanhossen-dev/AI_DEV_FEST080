@@ -13,7 +13,9 @@ export type NavigationPage =
   | "customer-portal"
   | "models"
   | "datasets"
-  | "system-health";
+  | "system-health"
+  | "security"
+  | "audit";
 
 export type TransactionType =
   | "Wallet Transfer"
