@@ -5,133 +5,157 @@
 [![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
+[![Express API](https://img.shields.io/badge/Express-5.2-000000?style=flat-square&logo=express)](https://expressjs.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com/)
+[![Python ML](https://img.shields.io/badge/Python_ML-Scikit--Learn_%2B_PyTorch-3776AB?style=flat-square&logo=python)](https://fastapi.tiangolo.com/)
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-2.5_Flash-orange?style=flat-square&logo=google)](https://ai.google.dev/)
-[![Tests](https://img.shields.io/badge/Unit_Tests-13_Passing-brightgreen?style=flat-square)](file:///Users/armanhossenripon/Documents/GitHub/AI_DEV_FEST080)
-[![Accuracy](https://img.shields.io/badge/Benchmark_Accuracy-100%25-success?style=flat-square)](file:///Users/armanhossenripon/Documents/GitHub/AI_DEV_FEST080)
-[![Bilingual](https://img.shields.io/badge/i18n-English_%7C_বাংলা-purple?style=flat-square)](file:///Users/armanhossenripon/Documents/GitHub/AI_DEV_FEST080)
+[![Tests](https://img.shields.io/badge/Automated_Tests-38_Passing-brightgreen?style=flat-square)](https://github.com/BornilMahmud/AI_DEV_FEST080)
+[![Accuracy](https://img.shields.io/badge/Benchmark_Accuracy-100%25-success?style=flat-square)](https://github.com/BornilMahmud/AI_DEV_FEST080)
+[![Bilingual](https://img.shields.io/badge/i18n-English_%7C_বাংলা-purple?style=flat-square)](https://github.com/BornilMahmud/AI_DEV_FEST080)
 
 ---
 
 ## 📌 Executive Summary
 
-**upay Sentinel** is an enterprise-grade AI Fraud & Scam Intelligence platform engineered specifically for modern Digital Financial Services (MFS) in Bangladesh. It bridges the critical operational gap between raw, high-velocity transaction streams and human analyst decision-making.
+**upay Sentinel** is a production-grade, two-sided AI Fraud & Scam Intelligence ecosystem engineered specifically for Bangladesh's Mobile Financial Services (MFS) ecosystem. It bridges the gap between everyday customer transactions and enterprise security operations.
 
-Rather than relying on superficial cosmetic dashboards or naive end-to-end LLM black-box classification, **upay Sentinel** implements a deterministic, multi-layered risk evaluation pipeline. High-throughput mathematical risk engines evaluate transactions in sub-milliseconds, while an interactive **Bangladesh Vector Atlas Map**, a **4-Stage Money Trail Pipeline**, and a **Google Gemini Investigative Copilot** empower analysts to neutralize syndicates under strict **Human-in-the-Loop** governance.
+The platform provides a **Dual-Sided Architecture**:
+1. **Customer Upay MFS Wallet (`/customer-portal`)**: Real-world MFS financial services (*Send Money, Cash Out, Add Money, Merchant Payment, Mobile Recharge, Bill Pay, Bank Transfer, Remittance, QR Pay*) coupled with transparent security telemetry (server-observed login IP and session history).
+2. **Enterprise Fraud Control Center (`/overview`)**: High-throughput multi-layered risk pipeline, interactive **Bangladesh 64-District Vector Atlas**, **4-Stage Money Trail Pipeline**, **Graph Ring Topology**, and a **Google Gemini Investigative Copilot** operating under strict **Human-in-the-Loop** governance.
 
 ---
 
-## 🏛️ System Architecture
+## 🏛️ System Topology & Dual-Sided Architecture
 
 ```mermaid
 flowchart TD
-    subgraph INGESTION["1. INGESTION & FEATURE EXTRACTION"]
-        TXN[Transaction Stream / Injected Attack] --> FE[Feature Extractor & Normalizer]
+    subgraph CLIENT_TIER["1. DUAL-PORTAL FRONTEND (Next.js 15 • Port 3000)"]
+        CUSTOMER["👤 CUSTOMER UPAY WALLET\n• Balance (৳ BDT) & KYC Status\n• 9 MFS Financial Services\n• Security Dossier & Observed IP\n• Purple Pointer Spotlight Grid"]
+        ADMIN["🛡️ ADMIN FRAUD & SOC CENTER\n• Enterprise Overview & KPIs\n• 64-District Vector Atlas\n• 4-Stage Money Trail & Mule Graph\n• ML Registry & System Health"]
     end
 
-    subgraph DETECTION_LAYERS["2. MULTI-SIGNAL RISK DETECTION ENGINES"]
-        FE --> BASELINE[Behavioral Baseline Profiler\n• Amount Z-Score\n• Nocturnal Window\n• Unrecognized Hardware]
-        FE --> VELOCITY[Sliding-Window Velocity\n• 10m/1h/24h Windows\n• Micro-structuring Smurfing\n• Rapid Inbound/Outbound]
-        FE --> ATO[Account Takeover Detector\n• USSD PIN Reset Tracking\n• Impossible Travel / Geo Jump\n• Immediate Cash-out Drain]
-        FE --> MULE[Mule Syndicate Intelligence\n• Cluster #17 Linkage\n• Conduit Pass-through\n• Layering Aggregation Hubs]
-        FE --> SCAM[Social Engineering Detector\n• Active Call Coaching\n• First-time Recipient Spike\n• Impersonation Vectors]
-        FE --> RULES[Compliance Rule Engine\n• Bangladesh Bank ৳50K Threshold\n• 24h SIM Swap Hold Rule\n• Night Cash-out Restriction]
-        FE --> GRAPH[Graph Network Topology\n• BFS Shortest Hop Distance\n• Shared Hardware Fingerprints]
-        FE --> TFJS[TensorFlow.js Neural Net\n• Local In-Browser Inference\n• Anomaly Probability Vector]
+    subgraph API_TIER["2. REST API & SECURITY (Express v5.2 • Port 3001)"]
+        AUTH["Firebase Token Validation & RBAC\n(CUSTOMER, ADMIN, ANALYST, INVESTIGATOR)"]
+        SEC["Server-Observed IP & Device Fingerprinting\n(Zero Client-Spoofed IP Trust)"]
+        RATE["Rate Limiting & Idempotency Safeguards"]
+        AUDIT_LOG["Append-Only Audit Trail & Compliance"]
     end
 
-    subgraph SCORING["3. RISK COMPOSITE SCORING & EXPLAINABILITY"]
-        BASELINE & VELOCITY & ATO & MULE & SCAM & RULES & GRAPH & TFJS --> SCORER[Multi-Signal Composite Scorer\n• Transparent Weighted Sum\n• Compliance Regulatory Floors\n• Confidence Synthesis\n• Structured Explanations]
+    subgraph RISK_PIER["3. FRAUD DETECTION & RISK PIPELINE"]
+        RULES["Bangladesh Bank Circular Rule Engine\n• ৳50K Threshold • 24h SIM Swap Hold\n• Micro-structuring Smurfing • Night Cash-out"]
+        VELOCITY["Sliding-Window Velocity Engine\n• 10m / 1h / 24h Windows"]
+        ATO["Account Takeover (ATO) Profiler\n• USSD PIN Reset Tracking • Impossible Travel"]
+        MULE["Mule Syndicate Intelligence\n• Cluster #17 Linkage • Pass-through Detection"]
     end
 
-    subgraph PIPELINE["4. UNIFIED SINGLE-SOURCE-OF-TRUTH STATE"]
-        SCORER --> CONTEXT[Sentinel Central Data Pipeline]
-        CONTEXT --> ATLAS[Authentic Bangladesh 64-District Vector Atlas]
-        CONTEXT --> TRAIL[4-Stage MFS Money Trail Pipeline Grid]
-        CONTEXT --> MONITOR[Live Transaction Feed · 20/page Pagination]
-        CONTEXT --> DOSSIER[Customer 360 Risk Dossier & Telemetry]
-        CONTEXT --> ALERTS[Intelligent Alert Triage Center]
-        CONTEXT --> CASES[Investigation Dossiers & Workspaces]
-        CONTEXT --> AUDIT[Immutable Session Audit Trail]
+    subgraph ML_TIER["4. MACHINE LEARNING MICROSERVICE (FastAPI • Port 8000)"]
+        GBDT["Scikit-Learn HistGradientBoosting\n(Leakage-Free PaySim + Synthetic Features)"]
+        ISOF["Scikit-Learn IsolationForest\n(Unsupervised Anomaly Detector)"]
+        NEURAL["PyTorch SentinelMLP\n(Deep Anomaly Probability Vector)"]
+        FUSION["Risk Fusion Engine\n(70% Deterministic Rules + 30% ML Inference)"]
     end
 
-    subgraph COPILOT["5. AI COPILOT & HUMAN-IN-THE-LOOP"]
-        CASES --> GEMINI[Gemini Investigation Copilot\n• What Happened?\n• Why is it Risky?\n• What Should upay Do Next?\n• Graceful Offline Heuristic Fallback]
-        GEMINI --> ANALYST[Human Risk Analyst Oversight\n(Autonomous Denials Prohibited)]
-        ANALYST --> DECISION[Analyst Action Execution\n• [HOLD SETTLEMENT]\n• [REQUEST BIOMETRIC 2FA]\n• [ESCALATE AML/LEGAL]\n• [MARK FALSE POSITIVE]\n• [CLOSE & RELEASE]]
-        DECISION --> AUDIT
+    subgraph DB_TIER["5. DATABASE & PERSISTENCE (Supabase PostgreSQL)"]
+        PG[("20 Enterprise Tables\n• profiles • login_ip_history • security_events\n• wallets • transactions • alerts • cases\n• ml_models • datasets • audit_events")]
     end
+
+    subgraph COPILOT_TIER["6. INVESTIGATION & HUMAN-IN-THE-LOOP"]
+        GEMINI["Google Gemini 2.5 Flash Forensic Copilot\n• What happened? • Why risky? • Action recommendation\n• Offline Heuristic Fallback"]
+        DECISION["Human Analyst Oversight\n(HOLD • STEP_UP • ESCALATE • RELEASE)"]
+    end
+
+    CUSTOMER --> AUTH
+    ADMIN --> AUTH
+    AUTH --> SEC --> RATE
+    RATE --> RULES & VELOCITY & ATO & MULE
+    RULES & VELOCITY & ATO & MULE --> GBDT & ISOF & NEURAL --> FUSION
+    FUSION --> PG
+    PG --> ADMIN
+    ADMIN --> GEMINI --> DECISION --> AUDIT_LOG --> PG
 ```
 
 ---
 
 ## 🌟 Core Product Capabilities
 
-### 1. 🇧🇩 Authentic Bangladesh Vector Atlas (All 8 Divisions & 64 Districts)
-- **Official Atlas Cartography**: Designed following official Bangladeshi educational atlas standards and vector map specifications.
-- **Full 64-District Coverage**: Every district in Bangladesh is mapped with accurate SVG coordinates, bilingual naming (বাংলা ও English), and real-time telemetry (live TPS, 24h volume in BDT, active wallets, and fraud risk scores).
-- **Cartographic Landmarks**:
-  - **National Capital (ঢাকা)**: Highlighted with the official red ring and golden star symbol.
-  - **Division & District Headquarters**: Dedicated symbols matching the official map legend.
-  - **Comprehensive River Systems**: Detailed river paths for the **Jamuna (যমুনা)**, **Padma (পদ্মা)**, **Meghna (মেঘনা)**, **Teesta (তিস্তা)**, **Surma (সুরমা)**, **Karnaphuli (কর্ণফুলী)**, and **Rupsha/Poshur (রূপসা ও পশুর)** with estuary expansion into the Bay of Bengal (**ব ঙ্গো প সা গ র**).
-  - **Sundarbans Mangrove Delta**: Patterned forest zone across Satkhira, Khulna, and Bagerhat.
-  - **Offshore Islands**: Bhola (ভোলা), Hatiya (হাতিয়া), Sandwip (সন্দ্বীপ), Kutubdia (কুতুবদিয়া), Maheshkhali (মহেশখালী), and St. Martin's Island (সেন্ট মার্টিন).
-  - **8-Point Compass Rose**: Traditional wind rose in the top-right corner with **উ (N)**, **দ (S)**, **পূ (E)**, **প (W)**.
-  - **Surrounding Borders**: West Bengal, Meghalaya, Assam, Tripura, Mizoram, and Myanmar.
-  - **Official Map Legend**: Clear keys for international borders, division boundaries, capital, HQs, and river networks.
-- **Spring Hover Physics**: Hovering any division or district scales it up with smooth spring easing (`cubic-bezier(0.34, 1.56, 0.64, 1)`), displaying an instant floating HUD with live figures.
-- **Interactive Search & Toggles**: Quick-search autocomplete for any of the 64 districts, one-click layer toggles (Districts, Rivers, Sundarbans, Transaction Flows), and seamless switching between **Colorful Atlas**, **Google Maps**, and **Satellite View**.
+### 1. 💳 Customer Upay Wallet Experience
+- **Live Account Balance**: Real-time BDT balance formatting (`৳ BDT`) with KYC verification badge and account tenure metrics.
+- **9 Core MFS Financial Services**:
+  - **Send Money**: P2P transfers evaluated in real-time through the risk fusion pipeline.
+  - **Cash Out**: Calculates official 1.49% MFS agent withdrawal fee with nocturnal anomaly checks.
+  - **Add Money**: Bank & Debit Card funding simulation with zero external charges.
+  - **Merchant Payment**: Instant QR and merchant wallet checkouts with tokenized idempotency.
+  - **Mobile Recharge**: Supports all 5 Bangladeshi telco operators (Grameenphone, Banglalink, Robi, Airtel, Teletalk).
+  - **Utility Bill Pay**: DESCO, DPDC, Titas Gas, and WASA bill settlement with account verification.
+  - **Bank Transfer (NPSB)**: Seamless wallet-to-bank account liquidation.
+  - **Inbound Remittance**: Cross-border remittance processing with BFIU tracking.
+  - **Bangla QR**: National standard QR code payment gateway.
+- **Transparent Security Center**: Displays real server-observed client IP (extracted via secure HTTP headers) and approximate network location (zero fabricated street addresses).
 
 ---
 
-### 2. 💸 MFS Money Trail: 4-Stage Pipeline Grid
-Instead of static descriptions, the money trail is visualized as a responsive **4-Stage Sequential Liquidation Pipeline** with directional connector arrows:
-1. **Stage 01 · Origin (উৎস)**: **Victim Wallets (ভুক্তভোগী ওয়ালেট)** — Initial compromise via phished PINs, OTP traps, or SIM swap hijacks (*৳48,500 avg loss*).
-2. **Stage 02 · Layering (লেয়ারিং)**: **Intermediary Mule Conduits (মিউল কনডুইট ওয়ালেট)** — Rapid multi-hop fan-out across dormant and student wallets (*4–6 hops < 90s*).
-3. **Stage 03 · Cash-Out (ক্যাশ-আউট)**: **Rogue Agent Points (অসাধু এজেন্ট পয়েন্ট)** — Coordinated off-hours OTC cash extraction bypassing KYC limits (*88% night OTC*).
-4. **Stage 04 · Exfiltration (পাচার)**: **Underground Liquidation (অবৈধ চ্যানেল ও হুন্ডি)** — Cross-border Hawala/Hundi conversion and P2P crypto exfiltration (*Black-box siphon*).
+### 2. 🟣 Global Purple Pointer Spotlight System
+Implemented according to high-performance interaction specifications:
+- **Exact Settings**:
+  - **Glow Size**: `Medium` ($340\text{px}$).
+  - **Color**: `Purple` (`rgba(168, 85, 247, 0.28)` core, `0.65` edge highlight).
+  - **Edge Lighting**: **ON** via dual-radial mask overlay (`maskComposite: "exclude"` / `-webkit-mask-composite: xor`). The nearest perimeter edge illuminates dynamically while far edges remain dim.
+  - **Lag**: `Short` ($80\text{ms}$ cubic-bezier transition).
+- **GPU-Only Performance Architecture**:
+  - The spotlight translates strictly via **GPU transforms** (`translate3d(x - radius, y - radius, 0)`).
+  - `top`, `left`, `width`, `height`, and `margin` are never mutated during motion, eliminating layout reflows and repaints.
+  - **Zero React state re-renders** during pointer movement (managed through DOM refs, `requestAnimationFrame`, and CSS custom properties).
+  - Light remains strictly clipped within each card container (`overflow: hidden`).
+- **Touch Screen Dragging**: Finger drags across card grids smoothly illuminate the active card under touch without blocking vertical page scrolling (`touchAction: "pan-y"`).
+- **Accessibility & Reduced Motion**: Automatically eliminates lag/glide and snaps instantaneously to the cursor when `prefers-reduced-motion: reduce` is enabled.
 
 ---
 
-### 3. 🔍 High-Density Live Transaction Telemetry Stream
-- **Search & Filter Bar**: Dedicated search box with clean icon alignment, border focus rings, and an instant clear button (`X`).
-- **Configurable Pagination**: Defaulting to **20 records per page** (with instant `10 | 20 | 50` page-size switcher) and dynamic range counters (`Showing 1–20 of 48 records`).
-- **Multi-Dimensional Filters**: Filter simultaneously by Risk Tier (Critical, High, Medium, Low), MFS Type (P2P Transfer, Cash Out, Merchant Pay, Add Money), and Division.
-- **Live Stream Controls**: Pause and resume streaming in real-time, or trigger 1-click synthetic attack injections.
+### 3. 🇧🇩 Authentic Bangladesh Vector Atlas (64 Districts)
+- **Official Atlas Cartography**: Engineered following official Bangladeshi educational atlas and vector specifications.
+- **Complete 64-District Coverage**: Every district in Bangladesh is mapped with accurate SVG paths, bilingual naming (বাংলা ও English), live TPS telemetry, and fraud heatmaps.
+- **Landmarks & Riverways**: Capital Dhaka (ঢাকা) with official red ring & star, division headquarters, major river systems (Jamuna, Padma, Meghna, Teesta, Surma, Karnaphuli, Rupsha), Sundarbans mangrove forest, and offshore islands (Bhola, Hatiya, Sandwip, Kutubdia, St. Martin's).
+- **Map View Switcher**: Instant switching between **Colorful Vector Atlas**, **Google Maps Embedded**, and **Satellite View**.
 
 ---
 
-### 4. 👤 Customer 360 Risk Dossier
-- **Prominent Risk Indicators**: Matching height and button sizing for the **`HIGH RISK PROFILE`** badge and the **`Open Case INV-1042 →`** action button.
-- **Big & Bold Forensic Metrics**: High-contrast, large monospace figures for:
-  - **Account Age**: `3y 2m`
-  - **30d Volume**: `৳1.42M`
-  - **Avg Transfer**: `৳6,800`
-  - **Known Devices**: `2 Devices`
-  - **Known Hubs**: `3 Locations`
-- **Behavioral Baselines**: 90-day historical standard distribution envelopes contrasted against real-time anomalies (e.g., nocturnal burst transfers, device mismatches, rapid velocity spikes).
+### 4. 💸 MFS Money Trail & 2D Graph Ring Topology
+- **4-Stage Liquidation Pipeline**:
+  1. **Stage 01 · Origin (উৎস)**: **Victim Wallets (ভুক্তভোগী)** — Phishing, OTP traps, SIM swap hijacks (*৳48,500 avg loss*).
+  2. **Stage 02 · Layering (লেয়ারিং)**: **Mule Conduits (মিউল কনডুইট)** — Multi-hop fan-out across dormant accounts (*< 90s*).
+  3. **Stage 03 · Cash-Out (ক্যাশ-আউট)**: **Rogue Agents (অসাধু এজেন্ট)** — Coordinated night OTC cash extractions (*88% nocturnal*).
+  4. **Stage 04 · Exfiltration (পাচার)**: **Hundi & Hawala (হুন্ডি চক্র)** — Underground cross-border settlement.
+- **Interactive SVG Mule Graph (`BangladeshMuleGraph.tsx`)**:
+  - Animated flowing fund beams along connecting edges (`.edge-flow`).
+  - Pulsing status halos on selected nodes (`.animate-statusPulse`).
+  - Active edge brightening with dimming of unconnected trails to preserve context.
+  - Selected Node Telemetry dossier panel equipped with Purple Spotlight.
 
 ---
 
 ### 5. 🤖 Google Gemini Investigative Copilot
-- **Structured Forensic Reasoning**: Answers three critical questions for every flagged transaction:
+- **Structured Forensic Reasoning**: Answers three core questions for every flagged transaction:
   1. *What happened?* (Chronological transaction summary)
-  2. *Why is it risky?* (Triggered compliance rules, baseline deviations, and syndicate graph linkages)
+  2. *Why is it risky?* (Triggered compliance rules, baseline deviations, and syndicate linkages)
   3. *What should upay do next?* (Prescriptive operational recommendations)
-- **Zero-Failure Offline Heuristic Fallback**: If the Gemini API key is not supplied or network connectivity is interrupted, the platform automatically engages its built-in rule-based heuristic synthesizer.
-- **Human-in-the-Loop Safeguard**: Automated financial blocks are strictly prohibited; human analysts retain final authority to execute actions (`[HOLD]`, `[STEP_UP]`, `[ESCALATE]`, `[RELEASE]`).
+- **Zero-Failure Offline Heuristic Fallback**: Automatic offline synthesizer activates if Gemini API is unreachable or key is unset.
+- **Human-in-the-Loop Safeguard**: Automated financial denials are strictly prohibited; human analysts retain final authority to execute actions (`[HOLD]`, `[STEP_UP]`, `[ESCALATE]`, `[RELEASE]`).
 
 ---
 
-### 6. 🌐 Bilingual Localization & Enterprise Design System
-- **Full Bilingual Support (EN / BN)**: One-click toggle between English and Bengali (**বাংলা**) across all views, data tables, map tooltips, and audit logs.
-- **Enterprise Light Aesthetic**: Built on a clean `#F7F8FA` wash with crisp `#E4E7EC` borders, zero heavy drop shadows, and accessible WCAG 2.1 contrast ratios.
-- **Auto-Dismiss Notifications**: Floating toast alerts feature a 10-second lifetime, visual progress countdown bar, hover-pause, and smooth fade-out animations.
+### 6. 🌐 Enterprise Motion Primitives & Micro-Interactions
+- **Centralized Motion Tokens ([`globals.css`](src/app/globals.css))**:
+  - `FAST`: $120\text{ms}$ | `NORMAL`: $200\text{ms}$ | `EMPHASIS`: $300\text{ms}$ (`cubic-bezier(0.16, 1, 0.3, 1)`).
+  - Tactile interactive feedback classes: `.hover-lift` ($-1.5\text{px}$ elevation) and `.press-down` ($+0.5\text{px}$ scale down).
+- **Risk Score Transitions ([`AnimatedNumber.tsx`](src/components/ui/AnimatedNumber.tsx))**: Monospace numeric interpolation with ease-out quad animation when risk score changes.
+- **Loading Skeleton ([`Skeleton.tsx`](src/components/ui/Skeleton.tsx))**: Fixed-dimension shimmer skeletons that eliminate layout shift.
+- **1100ms Sentinel Intro Animation ([`SentinelIntro.tsx`](src/components/ui/SentinelIntro.tsx))**: Restrained signal animation with session persistence and reduced-motion bypass.
 
 ---
 
 ## 🎯 1-Click Judge Demonstration Scenarios
 
-To verify the platform end-to-end, open the **Overview Dashboard** and click any scenario in the **Judge Demo Hub**:
+Open the **Overview Dashboard** to trigger synthetic attack vectors with 1-click execution:
 
 | Scenario | Attack Vector & Telemetry | Expected Risk | Triggered Rules / Anomalies |
 | :--- | :--- | :---: | :--- |
@@ -140,8 +164,6 @@ To verify the platform end-to-end, open the **Overview Dashboard** and click any
 | 📱 **SIM Swap Liquidation** | Maximum balance drain (৳98,000) within 10 minutes of carrier SIM swap from an emulator. | **Critical (~98)** | `RULE_SIM_SWAP_COOL_DOWN`, `RULE_BB_HIGH_VALUE`, Carrier Swap Violation. |
 | ⚡ **Smurfing Velocity** | 6 transfers of ৳24,500 executed in 180 seconds skirting the ৳25,000 reporting threshold. | **High (~80)** | `RULE_MICRO_STRUCTURING`, `VELOCITY_BURST`, Threshold Skirting. |
 | ✅ **Legitimate Payment** | ৳2,450 grocery payment at `M-291` from registered device during normal business hours. | **Low (~18)** | Conforms to 30-day baseline median, trusted hardware verified. |
-
-*Clicking any demo card immediately updates all product surfaces, fires telemetry events, creates investigation dossiers, and appends immutable records to the audit trail.*
 
 ---
 
@@ -163,7 +185,6 @@ To verify the platform end-to-end, open the **Overview Dashboard** and click any
 ACTUAL FRAUD            30 (TP)                 0 (FN)
 ACTUAL LEGIT             0 (FP)                70 (TN)
 ```
-*Run `npm test` or click **"Re-evaluate Benchmark"** in Fraud Analytics to re-compute these numbers live.*
 
 ---
 
@@ -171,52 +192,87 @@ ACTUAL LEGIT             0 (FP)                70 (TN)
 
 | Layer | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Framework** | Next.js 15 (App Router), React 19 | Enterprise server/client architecture |
-| **Language** | TypeScript 5.7 | Strict type safety across all risk engines |
-| **Styling** | Tailwind CSS 3.4 | Clean enterprise design system |
-| **Icons & Visuals** | Lucide React | High-clarity iconography |
-| **Map & Cartography** | SVG Vector Atlas + Google Maps Embed | 64-District administrative & terrain map |
-| **Local Machine Learning**| TensorFlow.js | In-browser sequential anomaly detection |
-| **AI Copilot** | Google Gemini API (`gemini-2.5-flash`) | Structured investigative reasoning & actions |
-| **Testing Engine** | Node.js Test Runner + `tsx` | 13 automated unit tests & benchmark checks |
+| **Frontend Framework** | Next.js 15.5 (App Router), React 19 | Production dual-portal interface |
+| **Type Safety** | TypeScript 5.7 | Strict end-to-end type contracts |
+| **Design System** | Tailwind CSS 3.4 + Custom Tokens | Enterprise white-theme design with purple spotlight |
+| **Icons & Micro-UI** | Lucide React | High-clarity iconography |
+| **3D & Animation** | Three.js v0.186 + Custom Motion Primitives | Dependency-free hardware-accelerated animations |
+| **Backend REST API** | Express v5.2, Node.js v24 | Financial service routes, auth, rate limiting |
+| **Database** | Supabase PostgreSQL (AWS Seoul) | 20 tables with RLS and session history |
+| **Authentication** | Firebase Authentication | Genuine Email/Password and OAuth credentials |
+| **ML Inference Service** | Python FastAPI, Scikit-Learn, PyTorch | HistGradientBoosting, IsolationForest, SentinelMLP |
+| **AI Copilot** | Google Gemini 2.5 Flash | Forensic reasoning & BFIU report drafting |
+| **Automated Testing** | Node.js Test Runner + `tsx` | **38 Automated Tests** across all layers |
+
+---
+
+## 🧪 Comprehensive Test Suite (38/38 Passing)
+
+```bash
+# 1. Run MFS Customer & Admin Ecosystem Tests (11 Tests)
+npx tsx backend/test/mfs-customer-ecosystem.test.ts
+
+# 2. Run Backend API, Security & RLS Tests (14 Tests)
+npx tsx backend/test/backend-api.test.ts
+
+# 3. Run Risk Detection & Benchmark Evaluation Tests (13 Tests)
+npx tsx test/risk-engine.test.ts
+```
 
 ---
 
 ## 🚀 Getting Started
 
 ### 1. Prerequisites
-- **Node.js**: v18.0.0 or higher (Tested on Node.js v24 LTS)
+- **Node.js**: v18.0.0 or higher (Tested on Node.js v22/v24 LTS)
+- **Python**: v3.10+ (for ML inference microservice)
 - **npm**: v9.0.0 or higher
 
 ### 2. Installation
 ```bash
-git clone https://github.com/armanhossen-dev/AI_DEV_FEST080.git
+git clone https://github.com/BornilMahmud/AI_DEV_FEST080.git
 cd AI_DEV_FEST080
 npm install
 ```
 
-### 3. Environment Variables (Optional)
-Create a `.env` file in the root directory:
+### 3. Environment Configuration
+Copy `.env.example` to `.env`:
 ```env
-GEMINI_API_KEY=your_google_gemini_api_key_here
-```
-*(Note: If no API key is supplied, the platform automatically utilizes its high-fidelity grounded heuristic reasoning engine with zero errors).*
+# Next.js & Frontend
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 
-### 4. Run Automated Unit & Benchmark Tests
+# Express Backend
+PORT=3001
+ML_SERVICE_URL=http://localhost:8000
+
+# Supabase PostgreSQL
+SUPABASE_URL=https://xhgxmsgsxqpffzmpehtn.supabase.co
+SUPABASE_PUBLISHABLE_KEY=your_supabase_key
+
+# Google Gemini (Optional - Heuristic fallback engages if unset)
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+### 4. Running the Complete Ecosystem Locally
+
+#### Terminal 1 — Python ML Service (Port 8000)
 ```bash
-npm test
+cd ml-service
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
-*Executes all 13 unit tests across behavioral baselines, velocity bursts, account takeovers, mule rings, compliance rules, confusion matrices, and audit logging.*
 
-### 5. Run Production Build
+#### Terminal 2 — Express REST Backend (Port 3001)
 ```bash
-npm run build
+npx tsx watch server/index.ts
 ```
 
-### 6. Start Development Server
+#### Terminal 3 — Next.js Dual-Portal Frontend (Port 3000)
 ```bash
 npm run dev
+# Or for optimized production build:
+npm run build && npm run start
 ```
+
 Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ---
@@ -225,27 +281,36 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ```text
 AI_DEV_FEST080/
+├── backend/                          # Express REST API (v5.2)
+│   ├── server/                       # Service routers (customer, admin, auth, security)
+│   └── test/                         # Ecosystem & API test suites
+├── ml-service/                       # Python ML Inference Microservice (Port 8000)
+│   ├── app/                          # FastAPI endpoints, feature extractor, pipelines
+│   └── models/                       # Trained Scikit-Learn & PyTorch checkpoints
 ├── src/
 │   ├── app/                          # Next.js App Router (Layout & Global CSS)
 │   ├── components/
-│   │   ├── audit/                    # Immutable session audit trail view
-│   │   ├── cases/                    # Case management & investigation dossiers
-│   │   ├── customers/                # Customer 360 Risk Dossier & baseline views
-│   │   ├── investigations/           # Detailed investigation workspaces & evidence
-│   │   ├── network/                  # 64-District Atlas Map & 4-Stage Money Trail
-│   │   │   ├── BangladeshTransactionMap.tsx  # Authentic 64-district vector atlas
-│   │   │   ├── BangladeshMuleGraph.tsx       # Interactive 2D graph topology
-│   │   │   └── FraudNetworkView.tsx          # Money trail pipeline & view switcher
+│   │   ├── admin/                    # Model registry, dataset governance, system health
+│   │   ├── alerts/                   # Alert center & 24h triage rollup
+│   │   ├── analytics/                # Confusion matrix benchmark evaluation
+│   │   ├── auth/                     # Fair Firebase login & registration modal
+│   │   ├── chat/                     # Glass AI Gemini Copilot drawer
+│   │   ├── customer/                 # Upay MFS Customer Portal & 9 financial services
+│   │   ├── customers/                # Customer 360 Risk Dossier
+│   │   ├── investigations/           # Case workspaces, evidence ledger, SAR reports
+│   │   ├── network/                  # 64-District Atlas & 4-Stage Money Trail Graph
 │   │   ├── overview/                 # Executive dashboard & judge demo hub
-│   │   ├── transactions/             # Live transaction telemetry stream & drawer
-│   │   └── ui/                       # Reusable UI primitives, Toast, AppTour
-│   ├── context/                      # Sentinel central state management pipeline
+│   │   ├── transactions/             # Live telemetry feed & transaction drawer
+│   │   └── ui/                       # SpotlightCard, AnimatedNumber, Skeleton, SentinelIntro
+│   ├── context/                      # Sentinel central state management
 │   ├── data/                         # Synthetic MFS transaction & customer datasets
 │   ├── lib/                          # Multi-signal risk engines, Gemini client, i18n
 │   └── types/                        # Core TypeScript domain models & interfaces
-├── tests/                            # Automated unit & benchmark test suites
-├── public/                           # Static assets
-├── package.json                      # Project dependencies & npm scripts
+├── test/                             # Risk engine & benchmark unit tests
+├── ANIMATION_LIBRARY.md              # Curated 2D/3D animation library registry
+├── SKILL.md                          # design-using-library-repo agent skill
+├── PROJECT_STATE.md                  # Comprehensive architectural specification
+├── package.json                      # Project dependencies & scripts
 └── README.md                         # Complete project documentation
 ```
 
@@ -253,4 +318,5 @@ AI_DEV_FEST080/
 
 ## 📜 Compliance & Disclaimers
 * **Hackathon Track**: AI DEV FEST 2026 — Track 01: Trust & Risk Intelligence (DIU Computer Programming Club × upay).
-* **Synthetic Data Disclosure**: All transaction records, wallet identifiers, phone numbers, and geolocation logs are entirely synthetic and generated strictly for evaluation purposes.
+* **Regulatory Compliance**: Designed following Bangladesh Bank BFIU Circular 25/2023, ISO 27001 data separation principles, and OWASP Top 10 API Security Standards.
+* **Synthetic Data Disclosure**: All transaction records, wallet identifiers, phone numbers, and geolocation logs are synthetic and generated strictly for evaluation purposes.
