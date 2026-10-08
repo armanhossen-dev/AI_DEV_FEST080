@@ -9,7 +9,11 @@ export type NavigationPage =
   | "investigation"
   | "customers"
   | "alerts"
-  | "analytics";
+  | "analytics"
+  | "customer-portal"
+  | "models"
+  | "datasets"
+  | "system-health";
 
 export type TransactionType =
   | "Wallet Transfer"
