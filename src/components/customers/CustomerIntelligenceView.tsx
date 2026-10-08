@@ -17,6 +17,8 @@ import {
   CreditCard,
   ArrowRight,
 } from "lucide-react";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { AnimatedNumber } from "@/components/ui/AnimatedNumber";
 
 interface CustomerIntelligenceViewProps {
   onNavigate: (page: NavigationPage) => void;
@@ -73,8 +75,14 @@ export const CustomerIntelligenceView: React.FC<CustomerIntelligenceViewProps> =
 
       {/* Customer Header Card */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5">
-        {/* Profile Card */}
-        <div className="lg:col-span-5 card-base p-4 flex items-center gap-3.5 border border-slate-200 bg-white">
+        {/* Profile Card with Purple Spotlight */}
+        <SpotlightCard
+          color="purple"
+          glowSize="medium"
+          lightsEdges={true}
+          lag="short"
+          className="lg:col-span-5 p-4 flex items-center gap-3.5 border border-slate-200 bg-white rounded-xl shadow-subtle"
+        >
           <div className="w-11 h-11 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center font-bold text-lg shrink-0">
             U
           </div>
@@ -100,13 +108,21 @@ export const CustomerIntelligenceView: React.FC<CustomerIntelligenceViewProps> =
             <span className="text-[9.5px] text-slate-400 uppercase font-mono font-semibold">
               {language === "bn" ? "ঝুঁকি স্কোর" : "Risk Score"}
             </span>
-            <b className="text-2xl text-rose-600 block mt-0.5 font-mono font-black">{customer.riskScore}</b>
+            <b className="text-2xl text-rose-600 block mt-0.5 font-mono font-black">
+              <AnimatedNumber value={customer.riskScore} />
+            </b>
             <span className="text-[9.5px] text-slate-400 font-mono">/ 100</span>
           </div>
-        </div>
+        </SpotlightCard>
 
-        {/* 5 Stats Grid - Numbers Big and Bold */}
-        <div className="lg:col-span-7 card-base p-3 sm:p-4 grid grid-cols-2 sm:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 text-center border border-slate-200 bg-white items-center">
+        {/* 5 Stats Grid with Purple Spotlight */}
+        <SpotlightCard
+          color="purple"
+          glowSize="medium"
+          lightsEdges={true}
+          lag="short"
+          className="lg:col-span-7 p-3 sm:p-4 grid grid-cols-2 sm:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 text-center border border-slate-200 bg-white items-center rounded-xl shadow-subtle"
+        >
           <div className="p-2 sm:px-2">
             <span className="text-[10.5px] text-slate-500 font-medium block">
               {language === "bn" ? "অ্যাকাউন্ট বয়স" : "Account Age"}
@@ -141,7 +157,7 @@ export const CustomerIntelligenceView: React.FC<CustomerIntelligenceViewProps> =
               3 <span className="text-xs font-bold text-slate-500">{language === "bn" ? "টি" : "Locations"}</span>
             </b>
           </div>
-        </div>
+        </SpotlightCard>
       </div>
 
       {/* Baseline vs Deviations Grid */}

@@ -12,6 +12,7 @@ import {
   ArrowRight,
   TrendingUp,
 } from "lucide-react";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 interface DatasetRecord {
   id: string;
@@ -127,7 +128,14 @@ export const DatasetManagementView: React.FC = () => {
       {/* Dataset Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {datasets.map((ds) => (
-          <div key={ds.id} className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle space-y-4">
+          <SpotlightCard
+            key={ds.id}
+            color="purple"
+            glowSize="medium"
+            lightsEdges={true}
+            lag="short"
+            className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle space-y-4"
+          >
             <div className="flex items-center justify-between">
               <span className="text-xs font-mono font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">
                 {ds.version}
@@ -181,7 +189,7 @@ export const DatasetManagementView: React.FC = () => {
               <span>{ds.is_synthetic ? "Synthetic Benchmark Data" : "Production Corpus"}</span>
               <span>{ds.features_count} Engineered Features</span>
             </div>
-          </div>
+          </SpotlightCard>
         ))}
       </div>
     </div>

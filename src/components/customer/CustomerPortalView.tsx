@@ -33,6 +33,7 @@ import {
   History,
 } from "lucide-react";
 import { UserProfile } from "@/components/auth/LoginPage";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 interface CustomerPortalViewProps {
   currentUser: UserProfile;
@@ -407,7 +408,13 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
       {/* Top Wallet Overview Bar */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Main Wallet Card */}
-        <div className="lg:col-span-2 bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900 text-white rounded-2xl p-6 shadow-card hover:shadow-cardHover transition-all relative overflow-hidden flex flex-col justify-between">
+        <SpotlightCard
+          color="purple"
+          glowSize="medium"
+          lightsEdges={true}
+          lag="short"
+          className="lg:col-span-2 bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900 text-white rounded-2xl p-6 shadow-card hover:shadow-cardHover transition-all flex flex-col justify-between"
+        >
           {/* Subtle background decoration */}
           <div className="absolute -right-8 -bottom-8 w-48 h-48 bg-white/5 rounded-full blur-2xl pointer-events-none" />
           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -470,7 +477,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                 setActiveModal("send-money");
                 setTxResult(null);
               }}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-all flex flex-col items-center gap-1 text-center"
+              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition-all flex flex-col items-center gap-1 text-center"
             >
               <Send size={16} className="text-blue-200" />
               <span className="text-[11px] font-semibold">Send</span>
@@ -480,7 +487,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                 setActiveModal("add-money");
                 setTxResult(null);
               }}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-all flex flex-col items-center gap-1 text-center"
+              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition-all flex flex-col items-center gap-1 text-center"
             >
               <ArrowDownLeft size={16} className="text-emerald-300" />
               <span className="text-[11px] font-semibold">Add Money</span>
@@ -490,7 +497,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                 setActiveModal("cash-out");
                 setTxResult(null);
               }}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-all flex flex-col items-center gap-1 text-center"
+              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition-all flex flex-col items-center gap-1 text-center"
             >
               <ArrowUpRight size={16} className="text-amber-300" />
               <span className="text-[11px] font-semibold">Cash Out</span>
@@ -500,16 +507,22 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                 setActiveModal("payment");
                 setTxResult(null);
               }}
-              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-all flex flex-col items-center gap-1 text-center"
+              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition-all flex flex-col items-center gap-1 text-center"
             >
               <CreditCard size={16} className="text-purple-300" />
               <span className="text-[11px] font-semibold">Payment</span>
             </button>
           </div>
-        </div>
+        </SpotlightCard>
 
         {/* Security Profile / Observed Telemetry Card */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-subtle flex flex-col justify-between">
+        <SpotlightCard
+          color="purple"
+          glowSize="medium"
+          lightsEdges={true}
+          lag="short"
+          className="bg-white border border-slate-200 rounded-2xl p-5 shadow-subtle flex flex-col justify-between"
+        >
           <div>
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
@@ -565,7 +578,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               </button>
             )}
           </div>
-        </div>
+        </SpotlightCard>
       </div>
 
       {/* Full Core Customer Services Grid */}
@@ -579,12 +592,17 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
           {/* 1. Send Money */}
-          <button
+          <SpotlightCard
+            as="button"
             onClick={() => {
               setActiveModal("send-money");
               setTxResult(null);
             }}
-            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-blue-400 hover:shadow-card transition-all flex flex-col items-center text-center gap-2 group"
+            color="purple"
+            glowSize="medium"
+            lightsEdges={true}
+            lag="short"
+            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-blue-400 hover:shadow-card active:scale-[0.98] transition-all flex flex-col items-center text-center gap-2 group cursor-pointer"
           >
             <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
               <Send size={20} />
@@ -593,15 +611,20 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               <div className="text-xs font-bold text-slate-900">Send Money</div>
               <div className="text-[10px] text-slate-500">MFS to MFS Transfer</div>
             </div>
-          </button>
+          </SpotlightCard>
 
           {/* 2. Cash Out */}
-          <button
+          <SpotlightCard
+            as="button"
             onClick={() => {
               setActiveModal("cash-out");
               setTxResult(null);
             }}
-            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-amber-400 hover:shadow-card transition-all flex flex-col items-center text-center gap-2 group"
+            color="purple"
+            glowSize="medium"
+            lightsEdges={true}
+            lag="short"
+            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-amber-400 hover:shadow-card active:scale-[0.98] transition-all flex flex-col items-center text-center gap-2 group cursor-pointer"
           >
             <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-amber-600 group-hover:text-white transition-all">
               <ArrowUpRight size={20} />
@@ -610,15 +633,20 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               <div className="text-xs font-bold text-slate-900">Cash Out</div>
               <div className="text-[10px] text-slate-500">Agent & ATM 1.49%</div>
             </div>
-          </button>
+          </SpotlightCard>
 
           {/* 3. Add Money */}
-          <button
+          <SpotlightCard
+            as="button"
             onClick={() => {
               setActiveModal("add-money");
               setTxResult(null);
             }}
-            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-emerald-400 hover:shadow-card transition-all flex flex-col items-center text-center gap-2 group"
+            color="purple"
+            glowSize="medium"
+            lightsEdges={true}
+            lag="short"
+            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-emerald-400 hover:shadow-card active:scale-[0.98] transition-all flex flex-col items-center text-center gap-2 group cursor-pointer"
           >
             <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-emerald-600 group-hover:text-white transition-all">
               <ArrowDownLeft size={20} />
@@ -627,15 +655,20 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               <div className="text-xs font-bold text-slate-900">Add Money</div>
               <div className="text-[10px] text-slate-500">Bank & Cards (Demo)</div>
             </div>
-          </button>
+          </SpotlightCard>
 
           {/* 4. Payment */}
-          <button
+          <SpotlightCard
+            as="button"
             onClick={() => {
               setActiveModal("payment");
               setTxResult(null);
             }}
-            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-purple-400 hover:shadow-card transition-all flex flex-col items-center text-center gap-2 group"
+            color="purple"
+            glowSize="medium"
+            lightsEdges={true}
+            lag="short"
+            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-purple-400 hover:shadow-card active:scale-[0.98] transition-all flex flex-col items-center text-center gap-2 group cursor-pointer"
           >
             <div className="w-11 h-11 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-purple-600 group-hover:text-white transition-all">
               <CreditCard size={20} />
@@ -644,15 +677,20 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               <div className="text-xs font-bold text-slate-900">Payment</div>
               <div className="text-[10px] text-slate-500">Merchant QR & Web</div>
             </div>
-          </button>
+          </SpotlightCard>
 
           {/* 5. Mobile Recharge */}
-          <button
+          <SpotlightCard
+            as="button"
             onClick={() => {
               setActiveModal("recharge");
               setTxResult(null);
             }}
-            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-teal-400 hover:shadow-card transition-all flex flex-col items-center text-center gap-2 group"
+            color="purple"
+            glowSize="medium"
+            lightsEdges={true}
+            lag="short"
+            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-teal-400 hover:shadow-card active:scale-[0.98] transition-all flex flex-col items-center text-center gap-2 group cursor-pointer"
           >
             <div className="w-11 h-11 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-teal-600 group-hover:text-white transition-all">
               <Smartphone size={20} />
@@ -661,15 +699,20 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               <div className="text-xs font-bold text-slate-900">Mobile Recharge</div>
               <div className="text-[10px] text-slate-500">All 5 BD Telcos</div>
             </div>
-          </button>
+          </SpotlightCard>
 
           {/* 6. Pay Bill */}
-          <button
+          <SpotlightCard
+            as="button"
             onClick={() => {
               setActiveModal("pay-bill");
               setTxResult(null);
             }}
-            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-rose-400 hover:shadow-card transition-all flex flex-col items-center text-center gap-2 group"
+            color="purple"
+            glowSize="medium"
+            lightsEdges={true}
+            lag="short"
+            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-rose-400 hover:shadow-card active:scale-[0.98] transition-all flex flex-col items-center text-center gap-2 group cursor-pointer"
           >
             <div className="w-11 h-11 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-rose-600 group-hover:text-white transition-all">
               <Receipt size={20} />
@@ -678,15 +721,20 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               <div className="text-xs font-bold text-slate-900">Pay Bill</div>
               <div className="text-[10px] text-slate-500">Electricity, Gas, Water</div>
             </div>
-          </button>
+          </SpotlightCard>
 
           {/* 7. Bank Transfer */}
-          <button
+          <SpotlightCard
+            as="button"
             onClick={() => {
               setActiveModal("bank-transfer");
               setTxResult(null);
             }}
-            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 hover:shadow-card transition-all flex flex-col items-center text-center gap-2 group"
+            color="purple"
+            glowSize="medium"
+            lightsEdges={true}
+            lag="short"
+            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 hover:shadow-card active:scale-[0.98] transition-all flex flex-col items-center text-center gap-2 group cursor-pointer"
           >
             <div className="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-indigo-600 group-hover:text-white transition-all">
               <Building2 size={20} />
@@ -695,15 +743,20 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               <div className="text-xs font-bold text-slate-900">Bank Transfer</div>
               <div className="text-[10px] text-slate-500">Wallet to Bank / NPSB</div>
             </div>
-          </button>
+          </SpotlightCard>
 
           {/* 8. Remittance */}
-          <button
+          <SpotlightCard
+            as="button"
             onClick={() => {
               setActiveModal("remittance");
               setTxResult(null);
             }}
-            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-sky-400 hover:shadow-card transition-all flex flex-col items-center text-center gap-2 group"
+            color="purple"
+            glowSize="medium"
+            lightsEdges={true}
+            lag="short"
+            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-sky-400 hover:shadow-card active:scale-[0.98] transition-all flex flex-col items-center text-center gap-2 group cursor-pointer"
           >
             <div className="w-11 h-11 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-sky-600 group-hover:text-white transition-all">
               <Globe2 size={20} />
@@ -712,15 +765,20 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               <div className="text-xs font-bold text-slate-900">Remittance</div>
               <div className="text-[10px] text-slate-500">Inbound Remittance</div>
             </div>
-          </button>
+          </SpotlightCard>
 
           {/* 9. QR Payment */}
-          <button
+          <SpotlightCard
+            as="button"
             onClick={() => {
               setActiveModal("qr-pay");
               setTxResult(null);
             }}
-            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-violet-400 hover:shadow-card transition-all flex flex-col items-center text-center gap-2 group"
+            color="purple"
+            glowSize="medium"
+            lightsEdges={true}
+            lag="short"
+            className="p-4 rounded-xl bg-white border border-slate-200 hover:border-violet-400 hover:shadow-card active:scale-[0.98] transition-all flex flex-col items-center text-center gap-2 group cursor-pointer"
           >
             <div className="w-11 h-11 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-violet-600 group-hover:text-white transition-all">
               <QrCode size={20} />
@@ -729,7 +787,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               <div className="text-xs font-bold text-slate-900">QR Payment</div>
               <div className="text-[10px] text-slate-500">Bangla QR Standard</div>
             </div>
-          </button>
+          </SpotlightCard>
         </div>
       </div>
 

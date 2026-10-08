@@ -310,7 +310,7 @@ export const GlassAiChatbot: React.FC<GlassAiChatbotProps> = ({
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex gap-2.5 ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex gap-2.5 animate-fadeUp ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
               >
                 {msg.sender === "bot" && (
                   <div className="w-7 h-7 rounded-xl bg-blue-100 border border-blue-200 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
@@ -438,7 +438,7 @@ export const GlassAiChatbot: React.FC<GlassAiChatbotProps> = ({
             <button
               type="submit"
               disabled={isLoading || !inputText.trim()}
-              className="w-9 h-9 rounded-xl bg-[#0052FF] hover:bg-blue-700 text-white flex items-center justify-center transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-xs shrink-0"
+              className="w-9 h-9 rounded-xl bg-[#0052FF] hover:bg-blue-700 active:scale-95 text-white flex items-center justify-center transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-xs shrink-0"
               title={isBn ? "পাঠান" : "Send message"}
             >
               <Send size={14} />

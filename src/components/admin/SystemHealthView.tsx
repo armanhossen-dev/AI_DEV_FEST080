@@ -14,6 +14,7 @@ import {
   Gauge,
   ShieldCheck,
 } from "lucide-react";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 interface ComponentHealth {
   status: "UP" | "CONFIGURED" | "DEGRADED" | "DOWN";
@@ -124,7 +125,13 @@ export const SystemHealthView: React.FC = () => {
       {/* Main Grid: 4 Core Services */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Express API */}
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle flex flex-col justify-between">
+        <SpotlightCard
+          color="purple"
+          glowSize="medium"
+          lightsEdges={true}
+          lag="short"
+          className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle flex flex-col justify-between"
+        >
           <div>
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
@@ -144,10 +151,16 @@ export const SystemHealthView: React.FC = () => {
             <span>Latency:</span>
             <span className="font-mono font-bold text-slate-800">{health.express.latencyMs} ms</span>
           </div>
-        </div>
+        </SpotlightCard>
 
         {/* Supabase PostgreSQL */}
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle flex flex-col justify-between">
+        <SpotlightCard
+          color="purple"
+          glowSize="medium"
+          lightsEdges={true}
+          lag="short"
+          className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle flex flex-col justify-between"
+        >
           <div>
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
@@ -167,10 +180,16 @@ export const SystemHealthView: React.FC = () => {
             <span>Latency:</span>
             <span className="font-mono font-bold text-slate-800">{health.supabase.latencyMs} ms</span>
           </div>
-        </div>
+        </SpotlightCard>
 
         {/* Python ML Service */}
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle flex flex-col justify-between">
+        <SpotlightCard
+          color="purple"
+          glowSize="medium"
+          lightsEdges={true}
+          lag="short"
+          className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle flex flex-col justify-between"
+        >
           <div>
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
@@ -190,10 +209,16 @@ export const SystemHealthView: React.FC = () => {
             <span>Inference Latency:</span>
             <span className="font-mono font-bold text-slate-800">{health.pythonMl.latencyMs} ms</span>
           </div>
-        </div>
+        </SpotlightCard>
 
         {/* Gemini Copilot */}
-        <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle flex flex-col justify-between">
+        <SpotlightCard
+          color="purple"
+          glowSize="medium"
+          lightsEdges={true}
+          lag="short"
+          className="p-5 rounded-2xl bg-white border border-slate-200 shadow-subtle flex flex-col justify-between"
+        >
           <div>
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
@@ -213,11 +238,17 @@ export const SystemHealthView: React.FC = () => {
             <span>Response Latency:</span>
             <span className="font-mono font-bold text-slate-800">{health.gemini.latencyMs} ms</span>
           </div>
-        </div>
+        </SpotlightCard>
       </div>
 
-      {/* Security Architecture Verification Box */}
-      <div className="p-5 rounded-2xl bg-slate-900 text-white space-y-3 shadow-card">
+      {/* Security Architecture Verification Box (Dark Surface) */}
+      <SpotlightCard
+        color="purple"
+        glowSize="medium"
+        lightsEdges={true}
+        lag="short"
+        className="p-5 rounded-2xl bg-slate-900 text-white space-y-3 shadow-card"
+      >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ShieldCheck size={18} className="text-emerald-400" />
@@ -248,7 +279,7 @@ export const SystemHealthView: React.FC = () => {
             </p>
           </div>
         </div>
-      </div>
+      </SpotlightCard>
     </div>
   );
 };

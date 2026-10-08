@@ -15,6 +15,7 @@ import {
   ArrowRight,
   Filter,
 } from "lucide-react";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 interface AlertCenterViewProps {
   onNavigate: (page: NavigationPage) => void;
@@ -107,9 +108,13 @@ export const AlertCenterView: React.FC<AlertCenterViewProps> = ({
             </div>
           ) : (
             filteredAlerts.map((alert) => (
-              <div
+              <SpotlightCard
                 key={alert.id}
-                className={`card-base p-3.5 flex items-center gap-3.5 transition-all border border-slate-200 bg-white ${
+                color="purple"
+                glowSize="small"
+                lightsEdges={true}
+                lag="short"
+                className={`card-base p-3.5 flex items-center gap-3.5 transition-all border border-slate-200 bg-white rounded-xl shadow-subtle hover-lift animate-fadeUp ${
                   alert.unread ? "border-l-4 border-l-rose-500" : ""
                 }`}
               >
@@ -192,13 +197,19 @@ export const AlertCenterView: React.FC<AlertCenterViewProps> = ({
                     <ArrowRight size={11} />
                   </button>
                 </div>
-              </div>
+              </SpotlightCard>
             ))
           )}
         </div>
 
         {/* Right: Alert Summary */}
-        <div className="lg:col-span-4 card-base p-4 flex flex-col justify-between space-y-4 border border-slate-200 bg-white h-fit">
+        <SpotlightCard
+          color="purple"
+          glowSize="medium"
+          lightsEdges={true}
+          lag="short"
+          className="lg:col-span-4 p-4 flex flex-col justify-between space-y-4 border border-slate-200 bg-white rounded-xl shadow-subtle h-fit"
+        >
           <div>
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wide pb-2 border-b border-slate-200">
               {language === "bn" ? "২৪ ঘণ্টার সারসংক্ষেপ" : "24h Triage Rollup"}
@@ -243,7 +254,7 @@ export const AlertCenterView: React.FC<AlertCenterViewProps> = ({
               <b className="font-mono text-slate-900">4m 12s</b>
             </div>
           </div>
-        </div>
+        </SpotlightCard>
       </div>
     </div>
   );

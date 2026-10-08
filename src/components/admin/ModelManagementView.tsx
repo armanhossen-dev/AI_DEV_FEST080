@@ -14,6 +14,7 @@ import {
   Calendar,
   Lock,
 } from "lucide-react";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 interface ModelRecord {
   id: string;
@@ -186,8 +187,12 @@ export const ModelManagementView: React.FC<ModelManagementViewProps> = ({ onNoti
       {/* Model Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {models.map((model) => (
-          <div
+          <SpotlightCard
             key={model.id}
+            color="purple"
+            glowSize="medium"
+            lightsEdges={true}
+            lag="short"
             className={`p-5 rounded-2xl bg-white border transition-all shadow-subtle flex flex-col justify-between ${
               model.status === "ACTIVE"
                 ? "border-blue-400 ring-1 ring-blue-500/10"
@@ -271,7 +276,7 @@ export const ModelManagementView: React.FC<ModelManagementViewProps> = ({ onNoti
                 <button
                   onClick={() => handleDeployModel(model)}
                   disabled={deployingId === model.id}
-                  className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors flex items-center gap-1 shadow-sm"
+                  className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors flex items-center gap-1 shadow-sm active:scale-95"
                 >
                   {deployingId === model.id ? (
                     <RefreshCw size={12} className="animate-spin" />
@@ -289,7 +294,7 @@ export const ModelManagementView: React.FC<ModelManagementViewProps> = ({ onNoti
                 </span>
               )}
             </div>
-          </div>
+          </SpotlightCard>
         ))}
       </div>
     </div>

@@ -139,3 +139,25 @@ All 20 tables are created, indexed, and actively connected via the `aws-0-ap-nor
 2. **Privacy Terminology:** All user-facing references state *"Current observed login IP"* and optional *"Approximate IP-based network location"*. Exact physical street addresses are never claimed or fabricated.
 3. **Fair Authentication:** Zero preset login buttons or bypass shortcuts exist on `LoginPage.tsx`. Authentication requires genuine Firebase credentials (Email/Password, Google OAuth, GitHub OAuth).
 4. **Simulation Transparency:** All mock external banking and telco gateways are explicitly disclaimed as *"DEMO / SIMULATION"* in the UI and API payload responses.
+
+---
+
+## 6. Motion & Visual Polish System (v2.1.0)
+
+1. **Global Purple Pointer Spotlight:**
+   - **Settings:** Medium Glow (340px), Purple theme (`rgba(168, 85, 247, ...)`), Lights Edges ON, Short Lag (80ms cubic-bezier transition).
+   - **Performance:** Move light using GPU transforms only (`translate3d(x, y, 0)`), no layout reflows (top/left/width/height untouched), zero React state re-renders during pointer tracking.
+   - **Edge Illumination:** Closest edges illuminate via dual CSS radial mask overlay (`maskComposite: "exclude"`), far edges remain dim.
+   - **Touch Dragging:** Supported via passive touch listeners without interfering with page scrolling (`touchAction: "pan-y"`).
+   - **Accessibility:** Snaps immediately with zero lag/glide when `prefers-reduced-motion` is enabled.
+
+2. **Enterprise Motion Primitives & Transitions:**
+   - Standardized tokens: `fast` (120ms), `normal` (200ms), `emphasis` (300ms) with `cubic-bezier(0.16, 1, 0.3, 1)`.
+   - Tactile button and card interactions (`.hover-lift`, `.press-down`, `.card-surface`).
+   - Risk score transitions via `AnimatedNumber` with tab-numeric monospace precision.
+   - Non-layout-shifting `Skeleton` shimmer loading primitives.
+   - 2D Money Trail animated flow beams (`.edge-flow`) and focused node halo pulses (`.animate-statusPulse`).
+
+3. **Strict Invariants Preserved:**
+   - Backend logic, database schemas, ML services, APIs, and authentication flow remain 100% untouched and operational.
+
